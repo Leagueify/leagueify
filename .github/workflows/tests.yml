@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Leagueify Repo
+        uses: actions/checkout@v3
+
+      - name: Prepare Node Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.1
+
+      - name: Install Leagueify Dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run Leagueify Tests
+        run: npx playwright test
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: results.xml
+          path: test-results
