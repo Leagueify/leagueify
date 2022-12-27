@@ -1,8 +1,8 @@
 # Leagueify
 
-[![Version](https://img.shields.io/github/v/release/Leagueify/Leagueify)](https://github.com/Leagueify/Leagueify/releases/latest)
-[![License](https://img.shields.io/github/license/Leagueify/Leagueify)](https://github.com/Leagueify/Leagueify/blob/main/LICENSE)
-[![Workflow](https://github.com/Leagueify/Leagueify/actions/workflows/tests.yml/badge.svg)](https://github.com/Leagueify/Leagueify/actions/workflows/tests.yml)
+[![Version](https://img.shields.io/github/v/release/Leagueify/leagueify)](https://github.com/Leagueify/leagueify/releases/latest)
+[![License](https://img.shields.io/github/license/Leagueify/leagueify)](https://github.com/Leagueify/leagueify/blob/main/LICENSE)
+[![Workflow](https://github.com/Leagueify/leagueify/actions/workflows/tests.yml/badge.svg)](https://github.com/Leagueify/leagueify/actions/workflows/tests.yml)
 
 Leagueify is an open source sporting league platform designed to efficiently host a variety of sporting leagues.
 
