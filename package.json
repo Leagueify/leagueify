@@ -1,6 +1,6 @@
 {
   "name": "leagueify",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "vite dev",
@@ -14,7 +14,8 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "mongoose": "^6.8.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
