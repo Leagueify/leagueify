@@ -3,17 +3,18 @@ import "@sentry/tracing";
 
 import type { HandleServerError } from "@sveltejs/kit";
 
-const SENTRY_DSN = process.env.SENTRY_DSN ?? null;
-const ENVIRONMENT = process.env.ENVIRONMENT;
+import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
+
+if (PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: PUBLIC_SENTRY_DSN,
+    environment: PUBLIC_SENTRY_ENV,
+    tracesSampleRate: 1.0,
+  });
+}
 
 export const handleError = (({ error, event }) => {
-  if (SENTRY_DSN) {
-    Sentry.init({
-      dsn: SENTRY_DSN,
-      environment: ENVIRONMENT,
-      tracesSampleRate: 1.0,
-    });
-
+  if (PUBLIC_SENTRY_DSN) {
     Sentry.setTag("Leagueify", "Backend");
     Sentry.captureException(error, { event });
 
