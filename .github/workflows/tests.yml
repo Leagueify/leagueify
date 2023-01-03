@@ -28,7 +28,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Leagueify Tests
-        run: npx playwright test
+        run: PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }} PUBLIC_SENTRY_ENV=development npx playwright test
 
       - name: Upload Test Results
         if: always()
