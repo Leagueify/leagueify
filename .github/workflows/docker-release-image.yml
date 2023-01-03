@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  BUILD_ACTION: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5
 
 jobs:
   build-and-push-image:
@@ -32,10 +33,21 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker Image
-        uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5
+      - name: Build and push Docker Image with Sentry
+        uses: ${{ env.BUILD_ACTION }}
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+            PUBLIC_SENTRY_ENV=${{ secrets.SENTRY_ENV }}
+
+      - name: Build and push Docker Image without Sentry
+        uses: ${{ env.BUILD_ACTION }}
+        with:
+          context: .
+          push: true
+          tags: name/app:no-sentry
           labels: ${{ steps.meta.outputs.labels }}
