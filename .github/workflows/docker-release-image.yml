@@ -6,7 +6,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository_owner }}/${{ github.repository }}
+  image_TAG: ${{ github.event.release.tag_name }}
 
 jobs:
   build-and-push-image:
@@ -26,28 +27,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@57396166ad8aefe6098280995947635806a0e6ea
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=semver,pattern={{version}}
-
       - name: Build and push Docker Image without Sentry
         uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-no-sentry
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ IMAGE_NAME }}:no-sentry
+            ${{ IMAGE_NAME }}:${{ image_TAG }}-no-sentry
 
       - name: Build and push Docker Image with Sentry
         uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ IMAGE_NAME }}
+            ${{ IMAGE_NAME }}:${{ image_TAG }
           build-args: |
             PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
             PUBLIC_SENTRY_ENV=${{ secrets.SENTRY_ENV }}
