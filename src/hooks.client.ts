@@ -16,7 +16,7 @@ if (PUBLIC_SENTRY_DSN) {
 
 export const handletError = (({ error, event }) => {
   if (PUBLIC_SENTRY_DSN) {
-    const errorId = crypto.randomUUID()
+    const errorId = crypto.randomUUID();
 
     Sentry.setTag("Leagueify", "Frontend");
     Sentry.captureException(error, { event, errorId });
