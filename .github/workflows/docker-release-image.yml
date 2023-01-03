@@ -49,5 +49,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: name/app:no-sentry
           labels: ${{ steps.meta.outputs.labels }}
