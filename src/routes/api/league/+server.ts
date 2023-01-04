@@ -7,13 +7,13 @@ import { League } from "$lib/server/models/league";
 
 export const GET: RequestHandler = async () => {
   // Response Details
-  let responseCode = {
+  const responseCode = {
     status: 200,
   };
   let responseData = {};
 
   // Connect to database
-  let db = await database.connect();
+  const db = await database.connect();
 
   // Find one League
   const leagueData = await League.findOne({}).exec();
@@ -30,15 +30,15 @@ export const GET: RequestHandler = async () => {
 
 export const POST: RequestHandler = async ({ request }) => {
   // Response Details
-  let responseCode = {
+  const responseCode = {
     status: 201,
   };
-  let responseData = {
+  const responseData = {
     message: "Created",
   };
 
   // Connect to database
-  let db = await database.connect();
+  const db = await database.connect();
 
   // Find one League
   const exists = await League.findOne({}).exec();
@@ -59,15 +59,15 @@ export const POST: RequestHandler = async ({ request }) => {
 
 export const PATCH: RequestHandler = async ({ request }) => {
   // Response Details
-  let responseCode = {
+  const responseCode = {
     status: 200,
   };
-  let responseData = {
+  const responseData = {
     message: "Updated",
   };
 
   // Connect to database
-  let db = await database.connect();
+  const db = await database.connect();
 
   // Find one League
   const exists = await League.findOne({}).exec();
