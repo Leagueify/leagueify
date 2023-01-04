@@ -1,0 +1,23 @@
+name: PR Requirements
+
+on:
+  pull_request:
+
+jobs:
+  pr-requirements:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Leagueify Repo
+        uses: actions/checkout@v3
+
+      - name: Prepare Node Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.12.1
+
+      - name: Install Leagueify Dependencies
+        run: npm ci
+
+      - name: Check Linting
+        run: npm run lint
