@@ -1,0 +1,20 @@
+<div class="mb-3">
+  <h2>League</h2>
+  <div class="input-group mb-3">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="League Name"
+      />
+      <label for="floatingInput">League Name</label>
+    </div>
+    <span class="input-group-text mb-3" id="sport-selector">
+      <select class="form-select" aria-label="Default select">
+        <option disabled selected>Select Sport</option>
+        <option value="hockey">Hockey</option>
+      </select>
+    </span>
+  </div>
+</div>
