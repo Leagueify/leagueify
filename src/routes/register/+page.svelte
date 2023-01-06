@@ -4,7 +4,7 @@
   import { leagueify } from "$lib/stores";
 </script>
 
-// Fix Bux with If Statement - It shows when league present
+<!-- Fix Bux with If Statement - It shows when league present -->
 {#if !$leagueify}
   <League />
 {/if}
