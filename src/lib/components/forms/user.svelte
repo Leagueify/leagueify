@@ -44,4 +44,47 @@
     />
     <label for="floatingInput">Phone Number</label>
   </div>
+  <div class="row g-2">
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInputGrid"
+          placeholder="MM"
+        />
+        <label for="floatingInput">Month</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInputGrid"
+          placeholder="DD"
+        />
+        <label for="floatingInput">Day</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInputGrid"
+          placeholder="YYYY"
+        />
+        <label for="floatingInput">Year</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="coach" value="coach" />
+    <label class="form-check-label" for="coach">Coach</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="volunteer" value="volunteer" />
+    <label class="form-check-label" for="volunteer">Volunteer</label>
+  </div>
 </div>
