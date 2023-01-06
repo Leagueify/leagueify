@@ -16,7 +16,7 @@
   "dependencies": {
     "@sentry/node": "^7.28.1",
     "@sentry/svelte": "^7.29.0",
-    "@sentry/tracing": "^7.28.1",
+    "@sentry/tracing": "^7.29.0",
     "bootstrap": "^5.2.3",
     "mongoose": "^6.8.2"
   },
