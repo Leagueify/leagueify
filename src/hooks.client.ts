@@ -14,7 +14,7 @@ if (PUBLIC_SENTRY_DSN) {
   });
 }
 
-export const handletError = (({ error, event }) => {
+export const handleError = (({ error, event }) => {
   if (PUBLIC_SENTRY_DSN) {
     const errorId = crypto.randomUUID();
 
