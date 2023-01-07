@@ -9,6 +9,7 @@
             class="form-control"
             id="floatingInputGrid"
             placeholder="First Name"
+            required
           />
           <label for="floatingInput">First Name</label>
         </div>
@@ -21,6 +22,7 @@
           class="form-control"
           id="floatingInputGrid"
           placeholder="Last Name"
+          required
         />
         <label for="floatingInput">Last Name</label>
       </div>
@@ -32,8 +34,20 @@
       class="form-control"
       id="floatingInput"
       placeholder="example@leagueify.org"
+      required
     />
     <label for="floatingInput">Email Address</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="password"
+      class="form-control"
+      id="floatingInput"
+      placeholder="Password"
+      minlength="8"
+      required
+    />
+    <label for="floatingInput">Password</label>
   </div>
   <div class="form-floating mb-3">
     <input
@@ -41,6 +55,8 @@
       class="form-control"
       id="floatingInput"
       placeholder="example@leagueify.org"
+      maxlength="10"
+      required
     />
     <label for="floatingInput">Phone Number</label>
   </div>
@@ -52,6 +68,8 @@
           class="form-control"
           id="floatingInputGrid"
           placeholder="MM"
+          maxlength="2"
+          required
         />
         <label for="floatingInput">Month</label>
       </div>
@@ -63,6 +81,8 @@
           class="form-control"
           id="floatingInputGrid"
           placeholder="DD"
+          maxlength="2"
+          required
         />
         <label for="floatingInput">Day</label>
       </div>
@@ -74,6 +94,8 @@
           class="form-control"
           id="floatingInputGrid"
           placeholder="YYYY"
+          maxlength="4"
+          required
         />
         <label for="floatingInput">Year</label>
       </div>
@@ -84,7 +106,12 @@
     <label class="form-check-label" for="coach">Coach</label>
   </div>
   <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="volunteer" value="volunteer" />
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="volunteer"
+      value="volunteer"
+    />
     <label class="form-check-label" for="volunteer">Volunteer</label>
   </div>
 </div>

@@ -7,11 +7,13 @@
         class="form-control"
         id="floatingInput"
         placeholder="League Name"
+        minlength="3"
+        required
       />
       <label for="floatingInput">League Name</label>
     </div>
     <span class="input-group-text mb-3" id="sport-selector">
-      <select class="form-select" aria-label="Default select">
+      <select class="form-select" aria-label="Default select" required>
         <option disabled selected>Select Sport</option>
         <option value="hockey">Hockey</option>
       </select>
