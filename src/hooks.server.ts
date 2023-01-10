@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/node";
 import "@sentry/tracing";
+import { redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
 import type { Handle, HandleServerError } from "@sveltejs/kit";
@@ -16,24 +17,18 @@ if (PUBLIC_SENTRY_DSN) {
 }
 
 export const handle = (async ({ event, resolve }) => {
-  if (!get(leagueData).name) {
-    console.log("No Data")
+  // Ensure we don't redirect to /register if we're already on /register
+  if (event.url.pathname === "/register") {
+    const response = await resolve(event);
+    return response;
   }
 
-  console.log(get(leagueData).name)
-
-  leagueData.update((data) => {
-    return {
-      ...data,
-      name: "League Name",
-    };
-  });
-
-
-  if (event.url.pathname.startsWith('/custom')) {
-    return new Response('custom response');
+  // Redirect to /register if Leaugeify isn't installed
+  if (!get(leagueData).installed) {
+    throw redirect(307, "/register");
   }
 
+  // Handle all other requests
   const response = await resolve(event);
   return response;
 }) satisfies Handle;

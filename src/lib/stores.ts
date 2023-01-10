@@ -1,3 +1,7 @@
 import { writable } from "svelte/store";
 
-export const leagueData = writable({});
+const leagueObject = {
+  installed: false,
+};
+
+export const leagueData = writable(leagueObject);
