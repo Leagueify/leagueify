@@ -1,12 +1,7 @@
 import { writable } from "svelte/store";
 
-function leagueifyInstallation() {
-  const { subscribe, set } = writable(false);
+const leagueObject = {
+  installed: false,
+};
 
-  return {
-    subscribe,
-    install: () => set(true),
-  };
-}
-
-export const leagueify = leagueifyInstallation();
+export const leagueData = writable(leagueObject);

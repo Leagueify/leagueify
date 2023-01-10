@@ -30,7 +30,7 @@ export const actions: Actions = {
         )}`,
         players: [],
         coach: data.get("coach") ? true : false,
-        volunteer: data.get("coach") ? true : false,
+        volunteer: data.get("volunteer") ? true : false,
         systemRole: "MASTER_ADMIN",
         password: data.get("password"),
         salt: "12345678",

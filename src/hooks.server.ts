@@ -1,9 +1,12 @@
 import * as Sentry from "@sentry/node";
 import "@sentry/tracing";
+import { redirect } from "@sveltejs/kit";
+import { get } from "svelte/store";
 
-import type { HandleServerError } from "@sveltejs/kit";
+import type { Handle, HandleServerError } from "@sveltejs/kit";
 
 import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
+import { leagueData } from "$lib/stores";
 
 if (PUBLIC_SENTRY_DSN) {
   Sentry.init({
@@ -12,6 +15,23 @@ if (PUBLIC_SENTRY_DSN) {
     tracesSampleRate: 1.0,
   });
 }
+
+export const handle = (async ({ event, resolve }) => {
+  // Ensure we don't redirect to /register if we're already on /register
+  if (event.url.pathname === "/register") {
+    const response = await resolve(event);
+    return response;
+  }
+
+  // Redirect to /register if Leaugeify isn't installed
+  if (!get(leagueData).installed) {
+    throw redirect(307, "/register");
+  }
+
+  // Handle all other requests
+  const response = await resolve(event);
+  return response;
+}) satisfies Handle;
 
 export const handleError = (({ error, event }) => {
   if (PUBLIC_SENTRY_DSN) {
