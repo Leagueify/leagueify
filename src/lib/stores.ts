@@ -5,3 +5,4 @@ const leagueObject = {
 };
 
 export const leagueData = writable(leagueObject);
+export const userData = writable({});
