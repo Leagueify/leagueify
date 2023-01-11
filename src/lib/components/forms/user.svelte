@@ -28,15 +28,43 @@
       </div>
     </div>
   </div>
-  <div class="form-floating mb-3">
-    <input
-      type="text"
-      class="form-control"
-      id="dateOfBirth"
-      name="dateOfBirth"
-      placeholder="MMDDYYYY"
-    />
-    <label for="dateOfBirth">Date of Birth</label>
+  <div class="row g-2">
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="month"
+          name="month"
+          placeholder="MM"
+        />
+        <label for="month">Month</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="day"
+          name="day"
+          placeholder="DD"
+        />
+        <label for="day">Day</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="year"
+          name="year"
+          placeholder="YYYY"
+        />
+        <label for="year">Year</label>
+      </div>
+    </div>
   </div>
   <div class="form-floating mb-3">
     <input
