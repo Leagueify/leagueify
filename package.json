@@ -25,7 +25,7 @@
     "@sveltejs/adapter-node": "^1.1.0",
     "@sveltejs/kit": "^1.0.7",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
-    "@typescript-eslint/parser": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.1",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-svelte3": "^4.0.0",
