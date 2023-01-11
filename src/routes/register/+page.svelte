@@ -3,13 +3,19 @@
 
   import League from "$lib/components/forms/league.svelte";
   import User from "$lib/components/forms/user.svelte";
-  import { leagueify } from "$lib/stores";
+  import { leagueData } from "$lib/stores";
 </script>
 
-<form method="POST" use:enhance>
-  {#if !$leagueify}
-    <League />
-  {/if}
-  <User />
-  <button class="btn btn-primary">Register</button>
-</form>
+<div class="d-flex justify-content-center vh-100 vw-100">
+  <div class="card h-auto w-25 align-self-center">
+    <div class="card-body">
+      <form method="POST" use:enhance>
+        {#if !$leagueData.installed}
+          <League />
+        {/if}
+        <User />
+        <button class="btn btn-primary">Register</button>
+      </form>
+    </div>
+  </div>
+</div>

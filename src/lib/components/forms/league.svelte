@@ -1,6 +1,10 @@
-<div class="mb-3">
-  <h2>League</h2>
-  <div class="input-group mb-3">
+<script lang="ts">
+  import { sports } from "$lib/stores";
+</script>
+
+<div class="d-flex flex-column align-items-center mb-3">
+  <h2>Welcome to Leagueify</h2>
+  <div class="input-group mb-3 w-100">
     <div class="form-floating mb-3">
       <input
         type="text"
@@ -21,7 +25,9 @@
         required
       >
         <option disabled selected>Select Sport</option>
-        <option value="hockey">Hockey</option>
+        {#each $sports as sport}
+          <option value={sport.toLowerCase()}>{sport}</option>
+        {/each}
       </select>
     </span>
   </div>
