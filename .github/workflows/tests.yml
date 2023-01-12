@@ -11,8 +11,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.19.1-focal
 
     services:
       leagueify-database:
