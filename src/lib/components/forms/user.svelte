@@ -1,3 +1,9 @@
+<script lang="ts">
+  import type { RegisterError } from "$lib/types";
+
+  export let form: { errors: RegisterError };
+</script>
+
 <div class="mb-3">
   <h2>User</h2>
   <div class="row g-2">
@@ -6,10 +12,11 @@
         <input
           type="text"
           class="form-control"
+          class:border-danger={form?.errors?.firstNameMissing ||
+            form?.errors?.firstNameShort}
           id="firstName"
           name="firstName"
           placeholder="First Name"
-          required
         />
         <label for="firstName">First Name</label>
       </div>
@@ -19,10 +26,11 @@
         <input
           type="text"
           class="form-control"
+          class:border-danger={form?.errors?.lastNameMissing ||
+            form?.errors?.lastNameShort}
           id="lastName"
           name="lastName"
           placeholder="Last Name"
-          required
         />
         <label for="lastName">Last Name</label>
       </div>
@@ -34,9 +42,12 @@
         <input
           type="text"
           class="form-control"
+          class:border-danger={form?.errors?.dobMonthMissing ||
+            form?.errors?.dobAccountRequirement}
           id="month"
           name="month"
           placeholder="MM"
+          maxlength="2"
         />
         <label for="month">Month</label>
       </div>
@@ -46,9 +57,12 @@
         <input
           type="text"
           class="form-control"
+          class:border-danger={form?.errors?.dobDayMissing ||
+            form?.errors?.dobAccountRequirement}
           id="day"
           name="day"
           placeholder="DD"
+          maxlength="2"
         />
         <label for="day">Day</label>
       </div>
@@ -58,9 +72,12 @@
         <input
           type="text"
           class="form-control"
+          class:border-danger={form?.errors?.dobYearMissing ||
+            form?.errors?.dobAccountRequirement}
           id="year"
           name="year"
           placeholder="YYYY"
+          maxlength="4"
         />
         <label for="year">Year</label>
       </div>
@@ -68,24 +85,13 @@
   </div>
   <div class="form-floating mb-3">
     <input
-      type="tel"
-      class="form-control"
-      id="phone"
-      name="phone"
-      placeholder="example@leagueify.org"
-      maxlength="10"
-      required
-    />
-    <label for="phone">Phone Number</label>
-  </div>
-  <div class="form-floating mb-3">
-    <input
       type="email"
       class="form-control"
+      class:border-danger={form?.errors?.emailMissing ||
+        form?.errors?.emailInvalid}
       id="email"
       name="email"
       placeholder="example@leagueify.org"
-      required
     />
     <label for="email">Email Address</label>
   </div>
@@ -93,13 +99,26 @@
     <input
       type="password"
       class="form-control"
+      class:border-danger={form?.errors?.passwordMissing ||
+        form?.errors?.passwordWeak}
       id="password"
       name="password"
       placeholder="Password"
-      minlength="8"
-      required
+      minlength="12"
     />
     <label for="password">Password</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="tel"
+      class="form-control"
+      class:border-danger={form?.errors?.phoneMissing}
+      id="phone"
+      name="phone"
+      placeholder="example@leagueify.org"
+      maxlength="10"
+    />
+    <label for="phone">Phone Number</label>
   </div>
   <div class="form-check form-check-inline">
     <input
