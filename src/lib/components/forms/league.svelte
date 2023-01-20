@@ -1,8 +1,7 @@
 <script lang="ts">
   import { sports } from "$lib/stores";
-  import type { RegisterError } from "$lib/types";
 
-  export let form: { errors: RegisterError };
+  export let form: { errors: Array<string> };
 </script>
 
 <div class="d-flex flex-column align-items-center mb-3">
@@ -12,8 +11,8 @@
       <input
         type="text"
         class="form-control"
-        class:border-danger={form?.errors?.leagueMissing ||
-          form?.errors?.leagueShort}
+        class:border-danger={form?.errors?.includes("leagueMissing") ||
+          form?.errors?.includes("leagueShort")}
         id="leagueName"
         name="leagueName"
         placeholder="League Name"
@@ -23,7 +22,7 @@
     <span class="input-group-text mb-3" id="sport-selector">
       <select
         class="form-select"
-        class:border-danger={form?.errors?.sportMissing}
+        class:border-danger={form?.errors?.includes("sportMissing")}
         id="leagueSport"
         name="leagueSport"
         aria-label="Default select"

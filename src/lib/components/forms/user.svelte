@@ -1,7 +1,5 @@
 <script lang="ts">
-  import type { RegisterError } from "$lib/types";
-
-  export let form: { errors: RegisterError };
+  export let form: { errors: Array<string> };
 </script>
 
 <div class="mb-3">
@@ -12,8 +10,8 @@
         <input
           type="text"
           class="form-control"
-          class:border-danger={form?.errors?.firstNameMissing ||
-            form?.errors?.firstNameShort}
+          class:border-danger={form?.errors?.includes("firstNameMissing") ||
+            form?.errors?.includes("firstNameShort")}
           id="firstName"
           name="firstName"
           placeholder="First Name"
@@ -26,8 +24,8 @@
         <input
           type="text"
           class="form-control"
-          class:border-danger={form?.errors?.lastNameMissing ||
-            form?.errors?.lastNameShort}
+          class:border-danger={form?.errors?.includes("lastNameMissing") ||
+            form?.errors?.includes("lastNameShort")}
           id="lastName"
           name="lastName"
           placeholder="Last Name"
@@ -42,8 +40,8 @@
         <input
           type="text"
           class="form-control"
-          class:border-danger={form?.errors?.dobMonthMissing ||
-            form?.errors?.dobAccountRequirement}
+          class:border-danger={form?.errors?.includes("dobMonthMissing") ||
+            form?.errors?.includes("dobAccountRequirement")}
           id="month"
           name="month"
           placeholder="MM"
@@ -57,8 +55,8 @@
         <input
           type="text"
           class="form-control"
-          class:border-danger={form?.errors?.dobDayMissing ||
-            form?.errors?.dobAccountRequirement}
+          class:border-danger={form?.errors?.includes("dobDayMissing") ||
+            form?.errors?.includes("dobAccountRequirement")}
           id="day"
           name="day"
           placeholder="DD"
@@ -72,8 +70,8 @@
         <input
           type="text"
           class="form-control"
-          class:border-danger={form?.errors?.dobYearMissing ||
-            form?.errors?.dobAccountRequirement}
+          class:border-danger={form?.errors?.includes("dobYearMissing") ||
+            form?.errors?.includes("dobAccountRequirement")}
           id="year"
           name="year"
           placeholder="YYYY"
@@ -87,8 +85,9 @@
     <input
       type="email"
       class="form-control"
-      class:border-danger={form?.errors?.emailMissing ||
-        form?.errors?.emailInvalid}
+      class:border-danger={form?.errors?.includes("emailMissing") ||
+        form?.errors?.includes("emailInUse") ||
+        form?.errors?.includes("emailInvalid")}
       id="email"
       name="email"
       placeholder="example@leagueify.org"
@@ -99,8 +98,8 @@
     <input
       type="password"
       class="form-control"
-      class:border-danger={form?.errors?.passwordMissing ||
-        form?.errors?.passwordWeak}
+      class:border-danger={form?.errors?.includes("passwordMissing") ||
+        form?.errors?.includes("passwordWeak")}
       id="password"
       name="password"
       placeholder="Password"
@@ -112,7 +111,9 @@
     <input
       type="tel"
       class="form-control"
-      class:border-danger={form?.errors?.phoneMissing}
+      class:border-danger={form?.errors?.includes("phoneMissing") ||
+        form?.errors?.includes("phoneInvalid") ||
+        form?.errors?.includes("phoneInUse")}
       id="phone"
       name="phone"
       placeholder="example@leagueify.org"

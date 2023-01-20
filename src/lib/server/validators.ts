@@ -1,72 +1,102 @@
-import type { RegisterError } from "$lib/types";
+import { get } from "svelte/store";
+
+import { leagueData } from "$lib/stores";
 
 export function birthdate(
-  errors: RegisterError,
-  month: string,
-  day: string,
-  year: string
-) {
+  errors: Array<string>,
+  month: FormDataEntryValue | null,
+  day: FormDataEntryValue | null,
+  year: FormDataEntryValue | null
+): Date {
   const currentAge: Date = new Date(`${month} ${day}, ${year}`);
   const requiredAge: Date = new Date();
 
-  // dobAccountRequirement: true = user is too young
-  errors.dobAccountRequirement = currentAge <= requiredAge ? false : true;
-  errors.dobMonthMissing = month === null || month === "" ? true : false;
-  errors.dobDayMissing = day === null || day === "" ? true : false;
-  errors.dobYearMissing = year === null || year === "" ? true : false;
+  // Set age requirement to 18 years old
+  requiredAge.setFullYear(requiredAge.getFullYear() - 18);
 
-  return errors;
+  // dobAccountRequirement: true = user is too young
+  currentAge >= requiredAge ? errors.push("dobAccountRequirement") : null;
+  month === null || month === "" ? errors.push("dobMonthMissing") : null;
+  day === null || day === "" ? errors.push("dobDayMissing") : null;
+  year === null || year === "" ? errors.push("dobYearMissing") : null;
+
+  return currentAge;
 }
 
-export function email(errors: RegisterError, email: string) {
+export function email(errors: Array<string>, email: FormDataEntryValue | null) {
+  email = email || "";
   const emailRegex =
     /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/;
-  errors.emailMissing = email === null || email === "" ? true : false;
-  errors.emailInvalid = !emailRegex.test(email);
-  return errors;
+
+  email === null || email === "" ? errors.push("emailMissing") : null;
+  !emailRegex.test(email.toString()) ? errors.push("emailInvalid") : null;
 }
 
-export function leagueName(errors: RegisterError, name: string) {
-  errors.leagueMissing = name === null || name === "" ? true : false;
-  errors.leagueShort = name.length < 3 && !errors.leagueMissing ? true : false;
+export function leagueName(
+  errors: Array<string>,
+  name: FormDataEntryValue | null
+) {
+  name = name || "";
 
-  return errors;
+  if (get(leagueData).installed === true) {
+    return;
+  }
+
+  name === null || name === "" ? errors.push("leagueMissing") : null;
+  name.length < 3 && !errors.includes("leagueMissing")
+    ? errors.push("leagueShort")
+    : null;
 }
 
-export function leagueSport(errors: RegisterError, sport: string) {
-  errors.sportMissing = sport === null ? true : false;
+export function leagueSport(
+  errors: Array<string>,
+  sport: FormDataEntryValue | null
+) {
+  sport = sport || "";
 
-  return errors;
+  if (get(leagueData).installed === true) {
+    return;
+  }
+
+  sport === null || sport === "" ? errors.push("sportMissing") : null;
 }
 
-export function password(errors: RegisterError, password: string) {
+export function password(
+  errors: Array<string>,
+  password: FormDataEntryValue | null
+) {
+  password = password || "";
   // 12-64 Characters - 1 Uppercase - 1 Lowercase - 1 Number - 1 Special Character
   const passwordRegex =
     /^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=[^!#%]*[!#%])[A-Za-z0-9!#%]{12,64}$/;
-  errors.passwordMissing = password === null || password === "" ? true : false;
-  errors.passwordWeak = !passwordRegex.test(password);
 
-  return errors;
+  password === null || password === "" ? errors.push("passwordMissing") : null;
+  !passwordRegex.test(password.toString()) ? errors.push("passwordWeak") : null;
 }
 
-export function phone(errors: RegisterError, phone: string) {
-  errors.phoneMissing = phone === null || phone === "" ? true : false;
+export function phone(errors: Array<string>, phone: FormDataEntryValue | null) {
+  phone = phone || "";
 
-  return errors;
+  phone === null || phone === "" ? errors.push("phoneMissing") : null;
+  phone.length < 10 && !errors.includes("phoneMissing");
 }
 
 export function name(
-  errors: RegisterError,
-  firstName: string,
-  lastName: string
+  errors: Array<string>,
+  firstName: FormDataEntryValue | null,
+  lastName: FormDataEntryValue | null
 ) {
-  errors.firstNameMissing =
-    firstName === null || firstName === "" ? true : false;
-  errors.firstNameShort =
-    firstName.length < 3 && !errors.firstNameMissing ? true : false;
-  errors.lastNameMissing = lastName === null || lastName === "" ? true : false;
-  errors.lastNameShort =
-    lastName.length < 3 && !errors.lastNameMissing ? true : false;
+  firstName = firstName || "";
+  lastName = lastName || "";
 
-  return errors;
+  firstName === null || firstName === ""
+    ? errors.push("firstNameMissing")
+    : null;
+  firstName.length < 3 && !errors.includes("firstNameMissing")
+    ? errors.push("firstNameShort")
+    : null;
+  lastName === null || lastName === "" ? errors.push("lastNameMissing") : null;
+  lastName.length < 3 && !errors.includes("lastNameMissing")
+    ? errors.push("lastNameShort")
+    : null;
 }
