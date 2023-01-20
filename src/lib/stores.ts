@@ -1,12 +1,11 @@
-import { writable } from "svelte/store";
+import { readable, writable } from "svelte/store";
 
-function leagueifyInstallation() {
-  const { subscribe, set } = writable(false);
+const leagueObject = {
+  installed: false,
+};
 
-  return {
-    subscribe,
-    install: () => set(true),
-  };
-}
+const sportsArray = ["Hockey"];
 
-export const leagueify = leagueifyInstallation();
+export const leagueData = writable(leagueObject);
+export const sports = readable(sportsArray);
+export const userData = writable({});

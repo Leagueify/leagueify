@@ -5,7 +5,7 @@ interface IUser {
   lastName: string;
   email: string;
   phone: string;
-  dateOfBirth: number;
+  dateOfBirth: Date;
   players: string[];
   coach: boolean;
   volunteer: boolean;
@@ -27,7 +27,7 @@ const schema = new Schema<IUser>({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
-  dateOfBirth: { type: Number, required: true },
+  dateOfBirth: { type: Date, required: true },
   players: { type: [String], required: true },
   coach: { type: Boolean, required: true },
   volunteer: { type: Boolean, required: true },
