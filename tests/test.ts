@@ -9,4 +9,4 @@ test("League form is present", async ({ page }) => {
   await page.goto("/");
   expect(await page.isVisible("#leagueName")).toBe(true);
   expect(await page.isVisible("#leagueSport")).toBe(true);
-})
+});
