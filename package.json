@@ -14,29 +14,29 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@sentry/node": "^7.29.0",
-    "@sentry/svelte": "^7.29.0",
-    "@sentry/tracing": "^7.29.0",
+    "@sentry/node": "^7.31.1",
+    "@sentry/svelte": "^7.31.1",
+    "@sentry/tracing": "^7.31.1",
     "bootstrap": "^5.2.3",
-    "mongoose": "^6.8.2"
+    "mongoose": "^6.8.4"
   },
   "devDependencies": {
-    "@playwright/test": "^1.28.1",
-    "@sveltejs/adapter-node": "^1.1.0",
-    "@sveltejs/kit": "^1.0.7",
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@typescript-eslint/parser": "^5.48.0",
-    "eslint": "^8.31.0",
+    "@playwright/test": "^1.29.2",
+    "@sveltejs/adapter-node": "^1.1.4",
+    "@sveltejs/kit": "^1.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^2.8.0",
+    "prettier": "^2.8.3",
     "prettier-plugin-svelte": "^2.8.1",
-    "svelte": "^3.54.0",
-    "svelte-check": "^3.0.1",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.2",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.4",
-    "vitest": "^0.26.3"
+    "vitest": "^0.27.2"
   },
   "type": "module"
 }
