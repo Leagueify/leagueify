@@ -2,6 +2,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 import type { Actions, PageServerLoadEvent } from "./$types";
 
+import * as auth from "$lib/server/auth";
 import * as database from "$lib/server/database";
 import { League } from "$lib/server/models/league";
 import { User } from "$lib/server/models/user";
@@ -65,8 +66,7 @@ export const actions: Actions = {
       coach: data.get("coach") ? true : false,
       volunteer: data.get("volunteer") ? true : false,
       systemRole: get(leagueData).installed ? "USER" : "MASTER_ADMIN",
-      password: data.get("password"), // TODO: Hash password
-      salt: "12345678", // TODO: Generate salt
+      password: auth.hashPassword(data.get("password")),
     }).save();
 
     await database.disconnect(db);
