@@ -11,7 +11,6 @@ interface IUser {
   volunteer: boolean;
   systemRole: string;
   password: string;
-  salt: string;
   token: string;
   tokenExpiration: number;
 }
@@ -33,7 +32,6 @@ const schema = new Schema<IUser>({
   volunteer: { type: Boolean, required: true },
   systemRole: { type: String, required: true, enum: Role, default: Role.USER },
   password: { type: String, required: true },
-  salt: { type: String, required: true },
   token: { type: String, required: false },
   tokenExpiration: { type: Number, required: false },
 });

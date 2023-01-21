@@ -1,7 +1,11 @@
 {
   "name": "leagueify",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
+  "engines": {
+    "npm": "8.19.2",
+    "node": "18.12.1"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -17,6 +21,8 @@
     "@sentry/node": "^7.31.1",
     "@sentry/svelte": "^7.31.1",
     "@sentry/tracing": "^7.31.1",
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.3",
     "mongoose": "^6.8.4"
   },
