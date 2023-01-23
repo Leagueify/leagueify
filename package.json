@@ -20,7 +20,7 @@
   "dependencies": {
     "@sentry/node": "^7.32.0",
     "@sentry/svelte": "^7.31.1",
-    "@sentry/tracing": "^7.31.1",
+    "@sentry/tracing": "^7.32.0",
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.3",
