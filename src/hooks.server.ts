@@ -8,7 +8,9 @@ import type { Handle, HandleServerError } from "@sveltejs/kit";
 import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
 import { leagueData } from "$lib/stores";
 
-if (PUBLIC_SENTRY_DSN) {
+const sentryIntegration = process.env.SENTRY;
+
+if (!sentryIntegration) {
   Sentry.init({
     dsn: PUBLIC_SENTRY_DSN,
     environment: PUBLIC_SENTRY_ENV,
@@ -34,7 +36,7 @@ export const handle = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 export const handleError = (({ error, event }) => {
-  if (PUBLIC_SENTRY_DSN) {
+  if (!sentryIntegration) {
     Sentry.setTag("Leagueify", "Backend");
     Sentry.captureException(error, { event });
 
