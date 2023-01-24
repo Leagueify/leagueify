@@ -5,7 +5,9 @@ import type { HandleClientError } from "@sveltejs/kit";
 
 import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
 
-if (PUBLIC_SENTRY_DSN) {
+const sentryIntegration = process.env.SENTRY
+
+if (!sentryIntegration) {
   Sentry.init({
     dsn: PUBLIC_SENTRY_DSN,
     environment: PUBLIC_SENTRY_ENV,
@@ -15,7 +17,7 @@ if (PUBLIC_SENTRY_DSN) {
 }
 
 export const handleError = (({ error, event }) => {
-  if (PUBLIC_SENTRY_DSN) {
+  if (!sentryIntegration) {
     const errorId = crypto.randomUUID();
 
     Sentry.setTag("Leagueify", "Frontend");
