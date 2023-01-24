@@ -9,6 +9,8 @@ import { User } from "$lib/server/models/user";
 import * as validate from "$lib/server/validators";
 import { leagueData } from "$lib/stores";
 
+import * as email from "$lib/server/email";
+
 export const load = (() => {
   return get(leagueData);
 }) satisfies PageServerLoadEvent;
@@ -44,12 +46,10 @@ export const actions: Actions = {
     }
 
     if (errors.length > 0) {
-      console.log(`Errors: ${errors.length}`);
       return fail(400, { errors });
     }
 
     if (get(leagueData).installed === false) {
-      console.log("Installing league...");
       await new League({
         name: data.get("leagueName"),
         sport: data.get("leagueSport"),
@@ -71,7 +71,14 @@ export const actions: Actions = {
 
     await database.disconnect(db);
 
-    leagueData.set({ installed: true });
+    leagueData.set({ installed: true, name: data.get("leagueName") });
+
+    await email.send(
+      data.get("email"),
+      "Welcome to Leagueify!",
+      `Welcome to Leagueify, ${data.get("firstName")}!`,
+      `<p>Welcome to Leagueify, ${data.get("firstName")}!</p>`
+    );
     throw redirect(303, "/");
   },
 };

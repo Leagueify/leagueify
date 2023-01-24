@@ -2,6 +2,7 @@ import { readable, writable } from "svelte/store";
 
 const leagueObject = {
   installed: false,
+  name: null,
 };
 
 const sportsArray = ["Hockey"];
