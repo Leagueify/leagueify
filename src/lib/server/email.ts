@@ -3,7 +3,7 @@ import { get } from "svelte/store";
 
 import { leagueData } from "$lib/stores";
 
-const smtpSettings: Object = {
+const smtpSettings: object = {
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
   secure: true,
