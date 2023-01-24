@@ -8,7 +8,7 @@ import type { Handle, HandleServerError } from "@sveltejs/kit";
 import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
 import { leagueData } from "$lib/stores";
 
-const sentryIntegration = process.env.SENTRY
+const sentryIntegration = process.env.SENTRY;
 
 if (!sentryIntegration) {
   Sentry.init({
