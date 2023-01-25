@@ -7,7 +7,7 @@ import * as database from "$lib/server/database";
 import { League } from "$lib/server/models/league";
 import { User } from "$lib/server/models/user";
 import * as validate from "$lib/server/validators";
-import { leagueData } from "$lib/stores";
+import { leagueData, userData } from "$lib/stores";
 
 import * as email from "$lib/server/email";
 
@@ -54,6 +54,7 @@ export const actions: Actions = {
         name: data.get("leagueName"),
         sport: data.get("leagueSport"),
       }).save();
+      leagueData.set({ installed: true, name: data.get("leagueName") });
     }
 
     await new User({
@@ -71,14 +72,15 @@ export const actions: Actions = {
 
     await database.disconnect(db);
 
-    leagueData.set({ installed: true, name: data.get("leagueName") });
+    userData.set({
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+    });
 
-    await email.send(
-      data.get("email"),
-      "Welcome to Leagueify!",
-      `Welcome to Leagueify, ${data.get("firstName")}!`,
-      `<p>Welcome to Leagueify, ${data.get("firstName")}!</p>`
-    );
+    email.send("leagueCreation");
+
     throw redirect(303, "/");
   },
 };
