@@ -7,6 +7,13 @@ const leagueObject = {
 
 const sportsArray = ["Hockey"];
 
+const userObject = {
+  firstName: null,
+  lastName: null,
+  email: null,
+  phone: null,
+};
+
 export const leagueData = writable(leagueObject);
 export const sports = readable(sportsArray);
-export const userData = writable({});
+export const userData = writable(userObject);
