@@ -6,6 +6,8 @@ import { get } from "svelte/store";
 import type { Handle, HandleServerError } from "@sveltejs/kit";
 
 import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
+import * as database from "$lib/server/database";
+import { League } from "$lib/server/models/league";
 import { leagueData } from "$lib/stores";
 
 const sentryIntegration = process.env.SENTRY;
@@ -27,7 +29,15 @@ export const handle = (async ({ event, resolve }) => {
 
   // Redirect to /register if Leaugeify isn't installed
   if (!get(leagueData).installed) {
-    throw redirect(307, "/register");
+    const db = await database.connect();
+    const league = await League.findOne();
+    await db.disconnect();
+
+    if (!league) {
+      throw redirect(307, "/register");
+    }
+
+    leagueData.set({ installed: true, name: league.name });
   }
 
   // Handle all other requests
