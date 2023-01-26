@@ -33,11 +33,8 @@ jobs:
       - name: Install Leagueify Dependencies
         run: npm ci
 
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-
-      - name: Run Leagueify Tests
-        run: docker-compose run --rm leagueify-webapp PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }} PUBLIC_SENTRY_ENV=development DATABASE_URI=mongodb://localhost:27017/leagueify DATABASE_USER=leagueify DATABASE_PASS=password npm run test
+      - name: Install Playwright and Run Leagueify Tests
+        run: docker-compose run --rm leagueify-webapp NPX playwright install && PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }} PUBLIC_SENTRY_ENV=development DATABASE_URI=mongodb://localhost:27017/leagueify DATABASE_USER=leagueify DATABASE_PASS=password npm run test
 
       - name: Upload Test Results
         if: always()
