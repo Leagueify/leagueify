@@ -30,7 +30,7 @@ export const handle = (async ({ event, resolve }) => {
   // Redirect to /register if Leaugeify isn't installed
   if (!get(leagueData).installed) {
     const db = await database.connect();
-    const league = await League.findOne();
+    const league = await League.findOne({});
     await db.disconnect();
 
     if (!league) {
