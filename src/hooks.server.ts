@@ -5,14 +5,18 @@ import { get } from "svelte/store";
 
 import type { Handle, HandleServerError } from "@sveltejs/kit";
 
-import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
+import {
+  PUBLIC_SENTRY,
+  PUBLIC_SENTRY_DSN,
+  PUBLIC_SENTRY_ENV,
+} from "$env/static/public";
 import * as database from "$lib/server/database";
 import { League } from "$lib/server/models/league";
 import { leagueData } from "$lib/stores";
 
-const sentryIntegration = process.env.SENTRY;
+const sentryDisabled = PUBLIC_SENTRY === "false" || false;
 
-if (!sentryIntegration) {
+if (!sentryDisabled) {
   Sentry.init({
     dsn: PUBLIC_SENTRY_DSN,
     environment: PUBLIC_SENTRY_ENV,
@@ -22,19 +26,19 @@ if (!sentryIntegration) {
 
 export const handle = (async ({ event, resolve }) => {
   // Ensure we don't redirect to /register if we're already on /register
-  if (event.url.pathname === "/register") {
+  if (event.url.pathname === "/install") {
     const response = await resolve(event);
     return response;
   }
 
-  // Redirect to /register if Leaugeify isn't installed
+  // Redirect to /isntall if Leaugeify isn't installed
   if (!get(leagueData).installed) {
     const db = await database.connect();
     const league = await League.findOne({});
     await db.disconnect();
 
     if (!league) {
-      throw redirect(307, "/register");
+      throw redirect(307, "/install");
     }
 
     leagueData.set({ installed: true, name: league.name });
@@ -46,7 +50,7 @@ export const handle = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 export const handleError = (({ error, event }) => {
-  if (!sentryIntegration) {
+  if (!sentryDisabled) {
     Sentry.setTag("Leagueify", "Backend");
     Sentry.captureException(error, { event });
 

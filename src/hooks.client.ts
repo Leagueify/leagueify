@@ -1,13 +1,16 @@
 import * as Sentry from "@sentry/svelte";
 import { BrowserTracing } from "@sentry/tracing";
-
 import type { HandleClientError } from "@sveltejs/kit";
 
-import { PUBLIC_SENTRY_DSN, PUBLIC_SENTRY_ENV } from "$env/static/public";
+import {
+  PUBLIC_SENTRY,
+  PUBLIC_SENTRY_DSN,
+  PUBLIC_SENTRY_ENV,
+} from "$env/static/public";
 
-const sentryIntegration = process.env.SENTRY;
+const sentryDisabled = PUBLIC_SENTRY === "false" || false;
 
-if (!sentryIntegration) {
+if (!sentryDisabled) {
   Sentry.init({
     dsn: PUBLIC_SENTRY_DSN,
     environment: PUBLIC_SENTRY_ENV,
@@ -17,7 +20,7 @@ if (!sentryIntegration) {
 }
 
 export const handleError = (({ error, event }) => {
-  if (!sentryIntegration) {
+  if (!sentryDisabled) {
     const errorId = crypto.randomUUID();
 
     Sentry.setTag("Leagueify", "Frontend");
