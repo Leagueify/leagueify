@@ -26,7 +26,7 @@ if (!sentryDisabled) {
 
 export const handle = (async ({ event, resolve }) => {
   // Ensure we don't redirect to /register if we're already on /register
-  if (event.url.pathname === "/install") {
+  if (event.url.pathname === "/register") {
     const response = await resolve(event);
     return response;
   }
@@ -38,7 +38,7 @@ export const handle = (async ({ event, resolve }) => {
     await db.disconnect();
 
     if (!league) {
-      throw redirect(307, "/install");
+      throw redirect(307, "/register");
     }
 
     leagueData.set({ installed: true, name: league.name });

@@ -1,6 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
-import type { Actions, PageServerLoadEvent } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 
 import * as auth from "$lib/server/auth";
 import * as database from "$lib/server/database";
@@ -13,16 +13,38 @@ import * as email from "$lib/server/email";
 
 export const load = (() => {
   return get(leagueData);
-}) satisfies PageServerLoadEvent;
+}) satisfies PageServerLoad;
 
 /** @type {import('./$types').Actions} */
 export const actions: Actions = {
   default: async ({ request }) => {
     const errors: Array<string> = [];
     const data = await request.formData();
-    // Validate input fields
-    validate.leagueName(errors, data.get("leagueName"));
-    validate.leagueSport(errors, data.get("leagueSport"));
+
+    // League Form Validation and Handling
+    if (get(leagueData).installed === false) {
+      validate.leagueName(errors, data.get("leagueName"));
+      validate.leagueSport(errors, data.get("leagueSport"));
+      validate.email(errors, data.get("outboundEmail"));
+
+      if (errors.length > 0) {
+        return fail(400, { errors });
+      }
+
+      const db = await database.connect();
+      await new League({
+        name: data.get("leagueName"),
+        sport: data.get("leagueSport"),
+        outboundEmail: data.get("outboundEmail"),
+      }).save();
+      await database.disconnect(db);
+
+      leagueData.set({ installed: true, name: data.get("leagueName") });
+
+      throw redirect(303, "/register");
+    }
+
+    // User Form Validation and Handling
     validate.name(errors, data.get("firstName"), data.get("lastName"));
     const dateOfBirth = validate.birthdate(
       errors,
@@ -46,15 +68,8 @@ export const actions: Actions = {
     }
 
     if (errors.length > 0) {
+      await database.disconnect(db);
       return fail(400, { errors });
-    }
-
-    if (get(leagueData).installed === false) {
-      await new League({
-        name: data.get("leagueName"),
-        sport: data.get("leagueSport"),
-      }).save();
-      leagueData.set({ installed: true, name: data.get("leagueName") });
     }
 
     await new User({
@@ -69,17 +84,7 @@ export const actions: Actions = {
       systemRole: get(leagueData).installed ? "USER" : "MASTER_ADMIN",
       password: auth.hashPassword(data.get("password")),
     }).save();
-
     await database.disconnect(db);
-
-    userData.set({
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      phone: data.get("phone"),
-    });
-
-    email.send("leagueCreation");
 
     throw redirect(303, "/");
   },

@@ -7,18 +7,33 @@
 
   export let data: PageData;
   export let form: { errors: Array<string> };
+  export let step: number = 1;
 </script>
 
-<div class="d-flex justify-content-center vh-100 vw-100">
-  <div class="card h-auto w-25 align-self-center">
-    <div class="card-body">
-      <form method="POST" novalidate use:enhance>
-        {#if !data.installed}
-          <League {form} />
-        {/if}
-        <User {form} />
-        <button class="btn btn-primary">Register</button>
-      </form>
-    </div>
-  </div>
+<div class="d-flex flex-column align-items-center mb-3">
+  <h2>Welcome to Leagueify</h2>
+  {#if !data.installed}
+    <p>Create your League</p>
+  {:else}
+    <p>Create an Account</p>
+  {/if}
+
+  <form
+    method="POST"
+    novalidate
+    use:enhance>
+    {#if !data.installed}
+      <League {form} />
+    {:else}
+      <User {form} />
+    {/if}
+
+    <button class="btn btn-primary">
+      {#if !data.installed}
+        Create League
+      {:else}
+        Create Account
+      {/if}
+    </button>
+  </form>
 </div>
