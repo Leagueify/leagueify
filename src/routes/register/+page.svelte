@@ -7,7 +7,6 @@
 
   export let data: PageData;
   export let form: { errors: Array<string> };
-  export let step: number = 1;
 </script>
 
 <div class="d-flex flex-column align-items-center mb-3">

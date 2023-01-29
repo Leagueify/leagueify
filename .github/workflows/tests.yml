@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Leagueify Tests
-        run: PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }} PUBLIC_SENTRY_ENV=development DATABASE_URI=mongodb://localhost:27017/leagueify DATABASE_USER=leagueify DATABASE_PASS=password npx playwright test
+        run: PUBLIC_SENTRY=true PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }} PUBLIC_SENTRY_ENV=development DATABASE_URI=mongodb://localhost:27017/leagueify DATABASE_USER=leagueify DATABASE_PASS=password npx playwright test
 
       - name: Upload Test Results
         if: always()
