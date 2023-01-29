@@ -27,7 +27,9 @@
       <User {form} />
     {/if}
 
-    <button class="btn btn-primary" id="registerButton">
+    <button
+      class="btn btn-primary"
+      id="registerButton">
       {#if !data.installed}
         Create League
       {:else}
