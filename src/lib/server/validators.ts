@@ -42,9 +42,9 @@ export function leagueName(
     return;
   }
 
-  name === null || name === "" ? errors.push("leagueMissing") : null;
-  name.length < 3 && !errors.includes("leagueMissing")
-    ? errors.push("leagueShort")
+  name === null || name === "" ? errors.push("missingLeagueName") : null;
+  name.length < 3 && !errors.includes("missingLeagueName")
+    ? errors.push("incorrectLengthLeagueName")
     : null;
 }
 
@@ -58,7 +58,7 @@ export function leagueSport(
     return;
   }
 
-  sport === null || sport === "" ? errors.push("sportMissing") : null;
+  sport === null || sport === "" ? errors.push("missingLeagueSport") : null;
 }
 
 export function password(

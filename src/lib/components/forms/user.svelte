@@ -3,7 +3,6 @@
 </script>
 
 <div class="mb-3">
-  <h2>User</h2>
   <div class="row g-2">
     <div class="col-md">
       <div class="form-floating mb-3">
@@ -14,8 +13,7 @@
             form?.errors?.includes("firstNameShort")}
           id="firstName"
           name="firstName"
-          placeholder="First Name"
-        />
+          placeholder="First Name" />
         <label for="firstName">First Name</label>
       </div>
     </div>
@@ -28,8 +26,7 @@
             form?.errors?.includes("lastNameShort")}
           id="lastName"
           name="lastName"
-          placeholder="Last Name"
-        />
+          placeholder="Last Name" />
         <label for="lastName">Last Name</label>
       </div>
     </div>
@@ -45,8 +42,7 @@
           id="month"
           name="month"
           placeholder="MM"
-          maxlength="2"
-        />
+          maxlength="2" />
         <label for="month">Month</label>
       </div>
     </div>
@@ -60,8 +56,7 @@
           id="day"
           name="day"
           placeholder="DD"
-          maxlength="2"
-        />
+          maxlength="2" />
         <label for="day">Day</label>
       </div>
     </div>
@@ -75,8 +70,7 @@
           id="year"
           name="year"
           placeholder="YYYY"
-          maxlength="4"
-        />
+          maxlength="4" />
         <label for="year">Year</label>
       </div>
     </div>
@@ -90,8 +84,7 @@
         form?.errors?.includes("emailInvalid")}
       id="email"
       name="email"
-      placeholder="example@leagueify.org"
-    />
+      placeholder="example@leagueify.org" />
     <label for="email">Email Address</label>
   </div>
   <div class="form-floating mb-3">
@@ -103,8 +96,7 @@
       id="password"
       name="password"
       placeholder="Password"
-      minlength="12"
-    />
+      minlength="12" />
     <label for="password">Password</label>
   </div>
   <div class="form-floating mb-3">
@@ -117,8 +109,7 @@
       id="phone"
       name="phone"
       placeholder="example@leagueify.org"
-      maxlength="10"
-    />
+      maxlength="10" />
     <label for="phone">Phone Number</label>
   </div>
   <div class="form-check form-check-inline">
@@ -127,9 +118,10 @@
       type="checkbox"
       id="coach"
       name="coach"
-      value="true"
-    />
-    <label class="form-check-label" for="coach">Coach</label>
+      value="true" />
+    <label
+      class="form-check-label"
+      for="coach">Coach</label>
   </div>
   <div class="form-check form-check-inline">
     <input
@@ -137,8 +129,9 @@
       type="checkbox"
       id="volunteer"
       name="volunteer"
-      value="true"
-    />
-    <label class="form-check-label" for="volunteer">Volunteer</label>
+      value="true" />
+    <label
+      class="form-check-label"
+      for="volunteer">Volunteer</label>
   </div>
 </div>

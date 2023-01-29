@@ -41,5 +41,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
+            PUBLIC_SENTRY=true
             PUBLIC_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
             PUBLIC_SENTRY_ENV=${{ secrets.SENTRY_ENV }}

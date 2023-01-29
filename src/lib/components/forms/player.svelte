@@ -14,8 +14,7 @@
             form?.errors?.includes("firstNameShort")}
           id="firstName"
           name="firstName"
-          placeholder="First Name"
-        />
+          placeholder="First Name" />
         <label for="firstName">First Name</label>
       </div>
     </div>
@@ -28,8 +27,7 @@
             form?.errors?.includes("lastNameShort")}
           id="lastName"
           name="lastName"
-          placeholder="Last Name"
-        />
+          placeholder="Last Name" />
         <label for="lastName">Last Name</label>
       </div>
     </div>
@@ -45,8 +43,7 @@
           id="month"
           name="month"
           placeholder="MM"
-          maxlength="2"
-        />
+          maxlength="2" />
         <label for="month">Month</label>
       </div>
     </div>
@@ -60,8 +57,7 @@
           id="day"
           name="day"
           placeholder="DD"
-          maxlength="2"
-        />
+          maxlength="2" />
         <label for="day">Day</label>
       </div>
     </div>
@@ -75,8 +71,7 @@
           id="year"
           name="year"
           placeholder="YYYY"
-          maxlength="4"
-        />
+          maxlength="4" />
         <label for="year">Year</label>
       </div>
     </div>
