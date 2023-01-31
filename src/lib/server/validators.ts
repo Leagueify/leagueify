@@ -16,9 +16,9 @@ export function birthdate(
 
   // dobAccountRequirement: true = user is too young
   currentAge >= requiredAge ? errors.push("dobAccountRequirement") : null;
-  month === null || month === "" ? errors.push("dobMonthMissing") : null;
-  day === null || day === "" ? errors.push("dobDayMissing") : null;
-  year === null || year === "" ? errors.push("dobYearMissing") : null;
+  month === null || month === "" ? errors.push("missingMonth") : null;
+  day === null || day === "" ? errors.push("missingDay") : null;
+  year === null || year === "" ? errors.push("missingYear") : null;
 
   return currentAge;
 }

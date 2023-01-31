@@ -7,9 +7,7 @@ import * as database from "$lib/server/database";
 import { League } from "$lib/server/models/league";
 import { User } from "$lib/server/models/user";
 import * as validate from "$lib/server/validators";
-import { leagueData, userData } from "$lib/stores";
-
-import * as email from "$lib/server/email";
+import { leagueData } from "$lib/stores";
 
 export const load = (() => {
   return get(leagueData);
