@@ -4,12 +4,31 @@ import type { Actions, PageServerLoad } from "./$types";
 
 import * as auth from "$lib/server/auth";
 import * as database from "$lib/server/database";
+import * as email from "$lib/server/email";
 import { League } from "$lib/server/models/league";
 import { User } from "$lib/server/models/user";
 import * as validate from "$lib/server/validators";
-import { leagueData } from "$lib/stores";
+import { leagueData, userData } from "$lib/stores";
 
-export const load = (() => {
+export const load = (async ({ url }) => {
+  if (url.searchParams.get("token") !== null) {
+    const db = await database.connect();
+    const user = await User.findOne({ token: url.searchParams.get("token") });
+
+    if (user && user.tokenExpiration > Date.now()) {
+      await User.updateOne(
+        { token: url.searchParams.get("token") },
+        {
+          token: null,
+          tokenExpiration: null,
+          isActive: true,
+        }
+      );
+      userData.set({ isActive: true });
+    }
+
+    database.disconnect(db);
+  }
   return get(leagueData);
 }) satisfies PageServerLoad;
 
@@ -37,7 +56,11 @@ export const actions: Actions = {
       }).save();
       await database.disconnect(db);
 
-      leagueData.set({ installed: true, name: data.get("leagueName") });
+      leagueData.set({
+        installed: true,
+        name: data.get("leagueName"),
+        outboundEmail: data.get("outboundEmail"),
+      });
 
       throw redirect(303, "/register");
     }
@@ -70,6 +93,8 @@ export const actions: Actions = {
       return fail(400, { errors });
     }
 
+    const userToken = auth.generateToken();
+
     await new User({
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
@@ -81,8 +106,19 @@ export const actions: Actions = {
       volunteer: data.get("volunteer") ? true : false,
       systemRole: get(leagueData).installed ? "USER" : "MASTER_ADMIN",
       password: auth.hashPassword(data.get("password")),
+      token: userToken,
+      tokenExpiration: auth.generateTokenExpiration(),
     }).save();
     await database.disconnect(db);
+
+    userData.set({
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+    });
+
+    email.send(email.templates.userRegistration(userToken));
 
     throw redirect(303, "/");
   },

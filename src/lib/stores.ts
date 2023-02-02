@@ -3,16 +3,20 @@ import { readable, writable } from "svelte/store";
 const leagueObject = {
   installed: false,
   name: null,
+  outboundEmail: null,
 };
 
 const sportsArray = ["Hockey"];
 
-const userObject = {
-  firstName: null,
-  lastName: null,
-  email: null,
-  phone: null,
-};
+const userObject: user = {};
+
+interface user {
+  firstName?: FormDataEntryValue;
+  lastName?: FormDataEntryValue;
+  email?: FormDataEntryValue;
+  phone?: FormDataEntryValue;
+  isActive?: boolean;
+}
 
 export const leagueData = writable(leagueObject);
 export const sports = readable(sportsArray);
