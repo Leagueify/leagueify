@@ -13,6 +13,7 @@ interface IUser {
   password: string;
   token: string;
   tokenExpiration: number;
+  isActive: boolean;
 }
 
 enum Role {
@@ -34,6 +35,7 @@ const schema = new Schema<IUser>({
   password: { type: String, required: true },
   token: { type: String, required: false },
   tokenExpiration: { type: Number, required: false },
+  isActive: { type: Boolean, required: true, default: false },
 });
 
 const User = model<IUser>("User", schema);

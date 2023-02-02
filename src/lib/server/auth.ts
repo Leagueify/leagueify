@@ -11,6 +11,15 @@ function addPepper(password: FormDataEntryValue) {
     .digest("hex");
 }
 
+export function generateToken() {
+  return crypto.randomBytes(32).toString("base64");
+}
+
+export function generateTokenExpiration() {
+  // Token expires in 10 minutes
+  return Date.now() + 600000;
+}
+
 export function hashPassword(password: FormDataEntryValue | null) {
   password = password || "";
 

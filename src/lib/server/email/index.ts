@@ -1,7 +1,5 @@
 import nodemailer from "nodemailer";
 
-import * as emailTemplate from "$lib/server/email/templates";
-
 const smtpSettings: object = {
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
@@ -15,7 +13,7 @@ const smtpSettings: object = {
 export async function send(template: string) {
   const transporter = nodemailer.createTransport(smtpSettings);
 
-  if (template === "leagueCreation") {
-    transporter.sendMail(await emailTemplate.leagueCreation());
-  }
+  transporter.sendMail(template);
 }
+
+export * as templates from "$lib/server/email/templates";
