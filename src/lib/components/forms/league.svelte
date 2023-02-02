@@ -58,8 +58,8 @@
     class="form-control" />
   {#if form?.errors?.includes("emailMissing")}
     <div
-      class="form-text text-danger"
-      id="leagueOutboundEmail">
+      id="leagueOutboundEmail"
+      class="form-text text-danger">
       Please provide the outbound league email address.
     </div>
   {/if}
