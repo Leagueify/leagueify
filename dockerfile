@@ -18,6 +18,4 @@ COPY --from=builder /usr/src/app/package.json .
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/public ./public
 
-RUN ls -al
-
 CMD [ "npm", "start" ]
