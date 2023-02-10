@@ -18,7 +18,7 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@sentry/node": "^7.36.0",
+    "@sentry/node": "^7.37.0",
     "@sentry/svelte": "^7.36.0",
     "@sentry/tracing": "^7.36.0",
     "@types/bcrypt": "^5.0.0",
