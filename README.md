@@ -1,40 +1,54 @@
 # Leagueify
 
-[![Version](https://img.shields.io/github/v/release/Leagueify/leagueify)](https://github.com/Leagueify/leagueify/releases/latest)
-[![License](https://img.shields.io/github/license/Leagueify/leagueify)](https://github.com/Leagueify/leagueify/blob/main/LICENSE)
-[![Workflow](https://github.com/Leagueify/leagueify/actions/workflows/tests.yml/badge.svg)](https://github.com/Leagueify/leagueify/actions/workflows/tests.yml)
+Welcome to the Leagueify development repository. Leagueify is an open source sporting league platform designed to efficiently host a variety of sporting leagues.
 
-Leagueify is an open source sporting league platform designed to efficiently host a variety of sporting leagues.
+- [Running Leagueify](#running-leagueify)
+- [Local Development](#local-development)
+- [Build Docker Image](#build-docker-image)
+- [Running Leagueify](#running-leagueify)
 
-## Getting Started
+## Running Leagueify
 
-Install Playwright for test execution:
+To run Leagueify [Docker](https://www.docker.com/) is required to be installed and running on the host machine. Using the example [Docker Compose](docker-compose.yml) file within this repository, the following command will start the Leagueify application:
 
 ```bash
-npx playwright install
+docker compose up -d
 ```
 
-## Developing
+## Local Development
 
 To ensure Node and NPM versions are consistent, this project makes use of [nvm](https://github.com/nvm-sh/nvm).
 
-Once you have cloned Leagueify and navigated to the project directory, install the correct node and npm versions with nvm (`nvm install`), activate required node and npm versions (`nvm use`), install dependencies (`npm install`).
+Once the Leagueify repository is cloned, prepare the local environment by running:
 
 ```bash
-npm run dev
+# Install Required Node and NPM Versions
+nvm install
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Activate Required Node and NPM Versions
+nvm use
+
+# Install Leagueify Dependencies
+npm install
 ```
 
-## Building
-
-To create a production version of your app:
+To run the application in development mode, run:
 
 ```bash
-npm run build
+# Incorrect Command - Will Not Work - See Below
+docker compose up -d
 ```
 
-You can preview the production build with `npm run preview`.
+Open your browser to [http://localhost](http://localhost) to view the application. While the application is running, any changes made to the source code will be automatically reloaded.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+**NOTE:** Currently, this does not automatically reload upon changes and will require a restart of the docker container. See [this issue](https://github.com/Leagueify/leagueify/issues/171) for more information.
+
+## Build Docker Image
+
+To build the Leagueify Docker image manually, run:
+
+```bash
+docker build -t leagueify .
+```
+
+This will build the image and all associated microservices with the tag `leagueify:latest`.

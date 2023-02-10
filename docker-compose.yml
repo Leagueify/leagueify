@@ -1,0 +1,48 @@
+# This is the main docker-compose file for the Leagueify project.
+version: "3.9"
+
+services:
+  traefik:
+    container_name: leagueify-traefik
+    image: traefik:v2.9.6
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:3000
+    ports:
+      - 80:3000
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  leagueify-webapp:
+    container_name: leagueify-webapp
+    image: ghcr.io/leagueify/leagueify:latest
+    environment:
+      DATABASE_URI: mongodb://leagueify-database:27017/leagueify
+      DATABASE_USER: leagueify
+      DATABASE_PASS: password
+      PASSWORD_PEPPER: NeverGonnaGiveYouUp
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.leagueify-webapp.entrypoints=web
+      - traefik.http.routers.leagueify-webapp.rule=PathPrefix(`/`)
+      - traefik.http.middlewares.leagueify-webapp.ratelimit.average=100
+    expose:
+      - 3000
+    restart: always
+#   leagueify-database:
+#     container_name: leagueify-database
+#     image: mongo:6.0.3
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: leagueify
+#       MONGO_INITDB_ROOT_PASSWORD: password
+#     expose:
+#       - 27017
+#     volumes:
+#       - database:/data/db
+#     restart: always
+
+# volumes:
+#   database:
