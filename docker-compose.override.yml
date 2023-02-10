@@ -1,11 +1,11 @@
 version: "3.9"
 
-services:  
+services:
   leagueify-webapp:
     # user: 1000:1000
     container_name: leagueify-webapp-dev
     image: leagueify
-    build: 
+    build:
       context: .
       target: development
     environment:

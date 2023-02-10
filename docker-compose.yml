@@ -1,5 +1,5 @@
 # This is the main docker-compose file for the Leagueify project.
-version: '3.9'
+version: "3.9"
 
 services:
   traefik:
@@ -32,7 +32,6 @@ services:
     expose:
       - 3000
     restart: always
-
 #   leagueify-database:
 #     container_name: leagueify-database
 #     image: mongo:6.0.3
