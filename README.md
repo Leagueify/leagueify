@@ -1,35 +1,54 @@
-## Getting Started
+# Leagueify
+
+Welcome to the Leagueify development repository. Leagueify is an open source sporting league platform designed to efficiently host a variety of sporting leagues.
+
+- [Running Leagueify](#running-leagueify)
+- [Local Development](#local-development)
+- [Build Docker Image](#build-docker-image)
+- [Running Leagueify](#running-leagueify)
+
+## Running Leagueify
+
+To run Leagueify [Docker](https://www.docker.com/) is required to be installed and running on the host machine. Using the example [Docker Compose](docker-compose.yml) file within this repository, the following command will start the Leagueify application:
+
+```bash
+docker compose up -d
+```
+
+## Local Development
 
 To ensure Node and NPM versions are consistent, this project makes use of [nvm](https://github.com/nvm-sh/nvm).
 
-Once you have cloned Leagueify and navigated to the project directory, install the correct node and npm versions with nvm (`nvm install`), activate required node and npm versions (`nvm use`), install dependencies (`npm install`).
-
-First, run the development server:
+Once the Leagueify repository is cloned, prepare the local environment by running:
 
 ```bash
-npm run dev
+# Install Required Node and NPM Versions
+nvm install
+
+# Activate Required Node and NPM Versions
+nvm use
+
+# Install Leagueify Dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run the application in development mode, run:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+# Incorrect Command - Will Not Work - See Below
+docker compose up -d
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Open your browser to [http://localhost](http://localhost) to view the application. While the application is running, any changes made to the source code will be automatically reloaded.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**NOTE:** Currently, this does not automatically reload upon changes and will require a restart of the docker container. See [this issue](https://github.com/Leagueify/leagueify/issues/171) for more information.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Build Docker Image
 
-## Docker Image
-
-This project is configured to build a Docker image. To build the image, run:
+To build the Leagueify Docker image manually, run:
 
 ```bash
 docker build -t leagueify .
 ```
 
-To run the image, run:
-
-```bash
-docker run --rm -p 3000:3000 leagueify
-```
+This will build the image and all associated microservices with the tag `leagueify:latest`.
