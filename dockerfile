@@ -4,10 +4,15 @@ WORKDIR /usr/src/app
 COPY . ./
 
 RUN npm install
-RUN npm run build
+
+# Configure User Service
+COPY ./services/user/pages ./pages
+COPY ./services/user/public ./public
+COPY ./services/user/styles ./styles
 
 FROM development as builder
 
+RUN npm run build
 RUN npm ci
 
 FROM builder as production
