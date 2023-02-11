@@ -5,7 +5,6 @@ Welcome to the Leagueify development repository. Leagueify is an open source spo
 - [Running Leagueify](#running-leagueify)
 - [Local Development](#local-development)
 - [Build Docker Image](#build-docker-image)
-- [Running Leagueify](#running-leagueify)
 
 ## Running Leagueify
 
