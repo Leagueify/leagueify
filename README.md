@@ -19,9 +19,12 @@ docker compose up -d
 
 To ensure Node and NPM versions are consistent, this project makes use of [nvm](https://github.com/nvm-sh/nvm).
 
-Once the Leagueify repository is cloned, prepare the local environment by running:
+Once the Leagueify repository is cloned, prepare the local environment by following these steps:
 
 ```bash
+# Rename template environment file
+cp template.env .env
+
 # Install Required Node and NPM Versions
 nvm install
 
