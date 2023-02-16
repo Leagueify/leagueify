@@ -11,15 +11,9 @@ services:
     environment:
       PUBLIC_SENTRY: false
     command: npm run dev
-    # Need to make hose files present in the container
-    # Adding the volumes below override the root files
-    # volumes:
-    #   - ./:/usr/src/app/
-    #   - ./services/user/pages/api:/usr/src/app/pages/api/
-    #   - ./services/user/public:/usr/src/app/public/user/
-    #   - ./services/user/styles:/usr/src/app/styles/user/
-
-  leagueify-database:
-    container_name: leagueify-database-dev
-    ports:
-      - 5432:5432
+    volumes:
+      - ./:/usr/src/app/
+# leagueify-database:
+#   container_name: leagueify-database-dev
+#   ports:
+#     - 27017:27017
