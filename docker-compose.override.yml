@@ -13,7 +13,6 @@ services:
     command: npm run dev
     volumes:
       - ./:/usr/src/app/
-
 # leagueify-database:
 #   container_name: leagueify-database-dev
 #   ports:
