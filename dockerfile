@@ -8,11 +8,6 @@ RUN npm install
 # Generate Licenses
 RUN node scripts/getLicenses.mjs
 
-# Configure User Service
-COPY ./services/user/pages ./pages
-COPY ./services/user/public ./public
-COPY ./services/user/styles ./styles
-
 FROM development as builder
 
 RUN npm run build

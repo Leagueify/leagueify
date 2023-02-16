@@ -37,13 +37,11 @@ npm install
 To run the application in development mode, run:
 
 ```bash
-# Incorrect Command - Will Not Work - See Below
+# Bring up the Leagueify Stack
 docker compose up -d
 ```
 
 Open your browser to [http://localhost](http://localhost) to view the application. While the application is running, any changes made to the source code will be automatically reloaded.
-
-**NOTE:** Currently, this does not automatically reload upon changes and will require a restart of the docker container. See [this issue](https://github.com/Leagueify/leagueify/issues/171) for more information.
 
 ## Build Docker Image
 
