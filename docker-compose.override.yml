@@ -2,18 +2,19 @@ version: "3.9"
 
 services:
   leagueify-webapp:
-    # user: 1000:1000
     container_name: leagueify-webapp-dev
     image: leagueify
     build:
       context: .
       target: development
     environment:
+      DATABASE_URI: postgresql://leagueify:password@leagueify-database-dev:5432/leagueify?schema=public
       PUBLIC_SENTRY: false
     command: npm run dev
     volumes:
       - ./:/usr/src/app/
-# leagueify-database:
-#   container_name: leagueify-database-dev
-#   ports:
-#     - 27017:27017
+
+  leagueify-database:
+    container_name: leagueify-database-dev
+    ports:
+      - 5432:5432
