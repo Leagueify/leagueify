@@ -20,7 +20,7 @@ services:
     container_name: leagueify-webapp
     image: ghcr.io/leagueify/leagueify:latest
     environment:
-      DATABASE_URI: postgresql://leagueify-database:5432/mydb?schema=public
+      DATABASE_URI: postgresql://leagueify:password@leagueify-database:5432/leagueify?schema=public
       DATABASE_USER: leagueify
       DATABASE_PASS: password
       PASSWORD_PEPPER: NeverGonnaGiveYouUp
