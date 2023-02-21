@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URI")
 }
 
+model League {
+  id      Int     @id @default(autoincrement())
+  name    String  @db.VarChar(255)
+  sport   String   @db.VarChar(255)
+}
+
 model User {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(32)
