@@ -15,7 +15,6 @@ model User {
   // Will Add Players Later in #198
   birthdate   DateTime  @db.Date
   password    String    @db.VarChar(255)
-  salt        String    @db.VarChar(255)
   role        Role      @default(USER)
   token       String    @db.VarChar(255)
   expiration  DateTime  @db.Date
