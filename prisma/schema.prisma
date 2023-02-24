@@ -7,17 +7,30 @@ datasource db {
   url      = env("DATABASE_URI")
 }
 
+model League {
+  id      Int     @id @default(autoincrement())
+  name    String  @db.VarChar(255)
+  sport   Sport   @relation(fields: [sportId], references: [id])
+  sportId Int
+}
+
+model Sport {
+  id      Int      @id @default(autoincrement())
+  name    String   @db.VarChar(255)
+  leagues League[]
+}
+
 model User {
-  id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(32)
-  email       String    @unique @db.VarChar(64)
-  phone       String    @db.VarChar(25)
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(32)
+  email      String   @unique @db.VarChar(64)
+  phone      String   @db.VarChar(25)
   // Will Add Players Later in #198
-  birthdate   DateTime  @db.Date
-  password    String    @db.VarChar(255)
-  role        Role      @default(USER)
-  token       String    @db.VarChar(255)
-  expiration  DateTime  @db.Date
+  birthdate  DateTime @db.Date
+  password   String   @db.VarChar(255)
+  role       Role     @default(USER)
+  token      String   @db.VarChar(255)
+  expiration DateTime @db.Date
 }
 
 enum Role {
