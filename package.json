@@ -14,7 +14,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@next/font": "13.2.1",
+    "@next/font": "13.2.3",
     "@prisma/client": "^4.10.1",
     "next": "13.2.1",
     "prisma": "^4.10.1",
