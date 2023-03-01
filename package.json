@@ -7,29 +7,41 @@
     "npm": "8.19.2"
   },
   "scripts": {
-    "dev": "prisma migrate deploy && next dev",
-    "build": "next build",
-    "start": "prisma migrate deploy && next start",
-    "lint": "prettier --check . && next lint",
-    "format": "prettier --write ."
+    "dev": "npx prisma migrate deploy && vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test:unit": "vitest",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@next/font": "13.2.1",
-    "@prisma/client": "^4.10.1",
-    "next": "13.2.1",
-    "prisma": "^4.10.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@prisma/client": "^4.11.0",
+    "prisma": "^4.11.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.28.1",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/adapter-node": "^1.2.0",
+    "@sveltejs/kit": "^1.5.0",
     "@types/license-checker": "^25.0.3",
-    "@types/node": "18.14.2",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
-    "eslint": "8.35.0",
-    "eslint-config-next": "13.2.1",
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "license-checker": "^25.0.1",
-    "prettier": "^2.8.4",
-    "typescript": "4.9.5"
-  }
+    "prettier": "^2.8.0",
+    "prettier-plugin-svelte": "^2.8.1",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0",
+    "vitest": "^0.25.3"
+  },
+  "type": "module"
 }
