@@ -9,10 +9,11 @@ datasource db {
 }
 
 model League {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(255)
-  sport   Sport   @relation(fields: [sportId], references: [id])
-  sportId Int
+  id            Int     @id @default(autoincrement())
+  name          String  @db.VarChar(255)
+  outboundEmail String  @unique @db.VarChar(64)
+  sport         Sport   @relation(fields: [sportId], references: [id])
+  sportId       Int
 }
 
 model Sport {
