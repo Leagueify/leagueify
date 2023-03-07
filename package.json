@@ -30,7 +30,7 @@
     "@types/license-checker": "^25.0.3",
     "@types/node": "^18.14.6",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
+    "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-svelte3": "^4.0.0",
