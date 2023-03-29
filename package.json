@@ -1,7 +1,11 @@
 {
   "name": "leagueify",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "engine": {
+    "node": "18.12.1",
+    "npm": "8.19.2"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
