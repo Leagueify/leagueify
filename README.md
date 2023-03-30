@@ -65,3 +65,21 @@ docker build -t leagueify .
 ```
 
 This will build the image and all associated microservices with the tag `leagueify:latest`.
+
+## Executing Tests
+
+To run the test suite for Leagueify, run:
+
+```bash
+# Install Playwright Dependencies
+npx playwright install
+
+# Run Full Test Suite
+npm run test
+
+# Run End-to-End Test Suite
+npm run test:e2e
+
+# Run Unit Test Suite
+npm run test:unit
+```
