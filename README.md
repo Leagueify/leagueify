@@ -1,38 +1,67 @@
-# create-svelte
+# Leagueify
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Welcome to the Leagueify development repository. Leagueify is an open source sporting league platform designed to efficiently host a variety of sporting leagues.
 
-## Creating a project
+- [Running Leagueify](#running-leagueify)
+- [Local Development](#local-development)
+- [Creating a New Migration](#creating-a-new-migration)
+- [Build Docker Image](#build-docker-image)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Running Leagueify
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To run Leagueify [Docker](https://www.docker.com/) is required to be installed and running on the host machine. Using the example [Docker Compose](docker-compose.yml) file within this repository, the following command will start the Leagueify application:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+docker compose up -d
 ```
 
-## Building
+## Local Development
 
-To create a production version of your app:
+To ensure Node and NPM versions are consistent, this project makes use of [nvm](https://github.com/nvm-sh/nvm).
+
+Once the Leagueify repository is cloned, prepare the local environment by following these steps:
 
 ```bash
-npm run build
+# Rename template environment file
+cp template.env .env
+
+# Install Required Node and NPM Versions
+nvm install
+
+# Activate Required Node and NPM Versions
+nvm use
+
+# Install Leagueify Dependencies
+npm install
 ```
 
-You can preview the production build with `npm run preview`.
+To run the application in development mode, run:
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```bash
+# Bring up the Leagueify Stack
+docker compose up -d
+```
+
+Open your browser to [http://localhost](http://localhost) to view the application. While the application is running, any changes made to the source code will be automatically reloaded.
+
+## Creating a New Migration
+
+Leagueify uses [Prisma](https://www.prisma.io/) to manage the database schema and migrations. To create a new migration, ensure the Leagueify stack is running and run the following command in a new terminal:
+
+```bash
+npx prisma migrate dev --name <migration-name>
+```
+
+This will create a new migration file in the `prisma/migrations` directory. The migration file will contain the changes to the database schema. Once the migration file is created, it can be committed to the repository. The migration-name should be descriptive of the changes being made to the database schema. The `--name` flag is optional. If not provided, Prisma will generate a random name for the migration.
+
+**TODO:** Document the process of squashing migrations, and the affect it will have for production deployments.
+
+## Build Docker Image
+
+To build the Leagueify Docker image manually, run:
+
+```bash
+docker build -t leagueify .
+```
+
+This will build the image and all associated microservices with the tag `leagueify:latest`.
