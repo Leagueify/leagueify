@@ -13,7 +13,11 @@ services:
       PUBLIC_SENTRY: false
     command: npm run dev -- --host --port=3000
     volumes:
-      - ./:/usr/src/app/
+      - ./prisma/:/home/node/app/prisma/
+      - ./scripts/:/home/node/app/scripts/
+      - ./src/:/home/node/app/src/
+      - ./static/:/home/node/app/static/
+      - ./tests/:/home/node/app/tests/
 
   leagueify-database:
     container_name: leagueify-database-dev
