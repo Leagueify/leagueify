@@ -32,6 +32,7 @@ model EmailConfig {
 model League {
   id              Int           @id @default(autoincrement())
   name            String        @db.VarChar(64)
+  domain          String        @db.VarChar(255) @unique
   sportRel        Sport         @relation(fields: [sport], references: [id])
   sport           Int
   leagueAdminRel  User          @relation(fields: [leagueAdmin], references: [id])
