@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "npx prisma migrate deploy && node index.js",
-    "dev": "npx prisma migrate dev && vite dev",
+    "dev": "npx prisma migrate deploy && vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -18,6 +18,9 @@
     "test:unit": "vitest run",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write ."
+  },
+  "prisma": {
+    "seed": "ts-node-esm ./prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0"
@@ -30,6 +33,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
+    "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "autoprefixer": "^10.4.14",
@@ -43,8 +47,9 @@
     "svelte": "^3.54.0",
     "svelte-check": "^3.0.1",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
-    "typescript": "^5.0.0",
+    "typescript": "^5.0.3",
     "vite": "^4.2.0",
     "vitest": "^0.25.3"
   },

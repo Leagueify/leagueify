@@ -40,7 +40,12 @@ To run the application in development mode, run:
 ```bash
 # Bring up the Leagueify Stack
 docker compose up -d
+
+# Seed the Local Database
+npx prisma db seed
 ```
+
+**WARNING:** Do not use production database credentials within the `.env` file. The `.env` file created in the previous step is used for local development only. The `.env` file should not be committed to the repository.
 
 Open your browser to [http://localhost](http://localhost) to view the application. While the application is running, any changes made to the source code will be automatically reloaded.
 
