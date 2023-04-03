@@ -4,9 +4,16 @@
   import { formData } from "$lib/stores";
 
   export let data: object;
+  let formLocked = false;
+  let leagueName = $formData.leagueName;
+  let leagueSport = $formData.leagueSport;
+
+  async function validateStep() {
+    formLocked = leagueName.length >= 3 && leagueSport !== "none";
+  }
 </script>
 
-<Step>
+<Step locked={!formLocked}>
   <span slot="header">League Details</span>
   This is where you will specify your league name and sport.
   <label class="label">
@@ -18,14 +25,16 @@
       id="leagueName"
       placeholder="League Name"
       maxlength="64"
-      bind:value={$formData.leagueName} />
+      bind:value={leagueName}
+      on:input={validateStep} />
   </label>
   <label class="label">
     <span>League Sport</span>
     <select
       class="select variant-form-material"
       name="leagueSport"
-      bind:value={$formData.leagueSport}>
+      bind:value={leagueSport}
+      on:change={validateStep}>
       <option
         value="none"
         disabled
