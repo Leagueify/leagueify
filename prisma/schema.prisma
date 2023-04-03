@@ -20,13 +20,14 @@ model Division {
 }
 
 model EmailConfig {
-  id        Int     @id @default(autoincrement())
-  smtpHost  String  @db.VarChar(255)
-  smtpPort  Int
-  smtpUser  String  @db.VarChar(255)
-  smtpPass  String  @db.VarChar(255)
-  enabled   Boolean @default(false)
-  league    League?
+  id            Int     @id @default(autoincrement())
+  outboundEmail String  @db.VarChar(64)
+  smtpHost      String  @db.VarChar(255)
+  smtpPort      Int
+  smtpUser      String  @db.VarChar(255)
+  smtpPass      String  @db.VarChar(255)
+  enabled       Boolean @default(false)
+  league        League?
 }
 
 model League {
