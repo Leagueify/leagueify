@@ -14,6 +14,7 @@
       class="input variant-form-material"
       name="userName"
       placeholder="Your Name"
+      maxlength="32"
       bind:value={formData.userName} />
   </label>
   <label class="label">
@@ -32,6 +33,7 @@
       class="input variant-form-material"
       name="userEmail"
       placeholder="user@example.com"
+      maxlength="64"
       bind:value={formData.userEmail} />
   </label>
   <label class="label">
@@ -41,6 +43,7 @@
       class="input variant-form-material"
       name="userPass"
       placeholder="********"
+      maxlength="255"
       bind:value={formData.userPass} />
   </label>
   <label class="label">
@@ -50,6 +53,7 @@
       class="input variant-form-material"
       name="userPhone"
       placeholder="(555) 555-5555"
+      maxlength="25"
       bind:value={formData.userPhone} />
   </label>
 </Step>

@@ -17,6 +17,7 @@
       name="leagueName"
       id="leagueName"
       placeholder="League Name"
+      maxlength="64"
       bind:value={$formData.leagueName} />
   </label>
   <label class="label">

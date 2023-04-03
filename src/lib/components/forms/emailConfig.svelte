@@ -14,6 +14,7 @@
       class="input variant-form-material"
       name="leagueOutboundEmail"
       placeholder="noreply@leagueify.org"
+      maxlength="64"
       bind:value={$formData.leagueOutboundEmail} />
   </label>
   <label class="label">
@@ -23,6 +24,7 @@
       class="input variant-form-material"
       name="leagueSMTPHost"
       placeholder="smtp.gmail.com"
+      maxlength="255"
       bind:value={$formData.leagueSMTPHost} />
   </label>
   <label class="label">
@@ -32,6 +34,7 @@
       class="input variant-form-material"
       name="leagueSMTPPort"
       placeholder="587"
+      maxlength="5"
       bind:value={$formData.leagueSMTPPort} />
   </label>
   <label class="label">
@@ -41,6 +44,7 @@
       class="input variant-form-material"
       name="leagueSMTPUser"
       placeholder="SMTPUser"
+      maxlength="64"
       bind:value={$formData.leagueSMTPUser} />
   </label>
   <label class="label">
@@ -50,6 +54,7 @@
       class="input variant-form-material"
       name="leagueSMTPPass"
       placeholder="********"
+      maxlength="255"
       bind:value={$formData.leagueSMTPPass} />
   </label>
 </Step>
