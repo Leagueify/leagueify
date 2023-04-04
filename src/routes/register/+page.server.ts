@@ -11,7 +11,11 @@ const data: object = {};
 
 export const load = (async () => {
   if (!leagueInstalled) {
-    data.supportedSports = await database.sport.findMany();
+    data.supportedSports = await database.sport.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
     return data;
   }
 }) satisfies PageServerLoad;
