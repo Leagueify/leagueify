@@ -14,10 +14,10 @@ jobs:
 
     services:
       leagueify-database:
-        image: mongo:6.0.3
+        image: postgres:15.2
         env:
-          MONGO_INITDB_ROOT_USERNAME: leagueify
-          MONGO_INITDB_ROOT_PASSWORD: password
+          POSTGRES_USER: leagueify
+          POSTGRES_PASSWORD: password
         ports:
           - 27017:27017
 
@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Leagueify Tests
-        run: DATABASE_URI=mongodb://localhost:27017/leagueify DATABASE_USER=leagueify DATABASE_PASS=password npx playwright test
+        run: DATABASE_URI=postgresql://leagueify:password@leagueify-database:5432/leagueify?schema=public DATABASE_USER=leagueify DATABASE_PASS=password npx playwright test
 
       - name: Upload Test Results
         if: always()
