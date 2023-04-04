@@ -19,7 +19,7 @@ jobs:
           POSTGRES_USER: leagueify
           POSTGRES_PASSWORD: password
         ports:
-          - 27017:27017
+          - 5432:5432
 
     steps:
       - name: Checkout Leagueify Repo
