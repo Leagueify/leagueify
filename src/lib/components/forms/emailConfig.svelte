@@ -6,7 +6,7 @@
 
 <Step>
   <span slot="header">League Email Configuration</span>
-  Configure your league's email settings.
+  <span> Configure your league's email settings.</span>
   <label class="label">
     <span>League Outbound Email</span>
     <input

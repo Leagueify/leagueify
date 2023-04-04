@@ -6,7 +6,7 @@
 
 <Step>
   <span slot="header">Account Details</span>
-  Please enter your account details below.
+  <span> Please enter your account details below.</span>
   <label class="label">
     <span>Your Name</span>
     <input

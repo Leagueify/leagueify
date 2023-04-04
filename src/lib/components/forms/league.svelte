@@ -15,7 +15,7 @@
 
 <Step locked={!formLocked}>
   <span slot="header">League Details</span>
-  This is where you will specify your league name and sport.
+  <span> This is where you will specify your league name and sport.</span>
   <label class="label">
     <span>League Name</span>
     <input
