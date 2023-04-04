@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["linux-musl-openssl-3.0.x", "native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URI")
+}
+
+model Division {
+  id        Int     @id @default(autoincrement())
+  leagueRel League @relation(fields: [league], references: [id])
+  league    Int
+  name      String  @db.VarChar(24)
+  minAge    Int
+  maxAge    Int
+  rosters   Roster[]
+  players   Player[]
+}
+
+model EmailConfig {
+  id            Int     @id @default(autoincrement())
+  outboundEmail String  @db.VarChar(64)
+  smtpHost      String  @db.VarChar(255)
+  smtpPort      Int
+  smtpUser      String  @db.VarChar(255)
+  smtpPass      String  @db.VarChar(255)
+  enabled       Boolean @default(false)
+  league        League?
+}
+
+model League {
+  id              Int           @id @default(autoincrement())
+  name            String        @db.VarChar(64)
+  domain          String        @db.VarChar(255) @unique
+  sportRel        Sport         @relation(fields: [sport], references: [id])
+  sport           Int
+  leagueAdminRel  User          @relation(fields: [leagueAdmin], references: [id])
+  leagueAdmin     Int
+  emailConfigRel  EmailConfig?  @relation(fields: [emailConfig], references: [id])
+  emailConfig     Int?          @unique
+  divisions       Division[]
+  players         Player[]
+}
+
+model Player {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(32)
+  dateOfBirth   DateTime  @db.Date
+  yearsPlayed   Int
+  positionRel   Position  @relation(fields: [position], references: [id])
+  position      Int
+  divisionRel   Division  @relation(fields: [division], references: [id])
+  division      Int
+  signedWaiver  Boolean   @default(false)
+  isRegistered  Boolean   @default(false)
+  parentRel     User      @relation(fields: [parent], references: [id])
+  parent        Int
+  leagueRel     League    @relation(fields: [league], references: [id])
+  league        Int
+  rosterRel     Roster?   @relation(fields: [roster], references: [id])
+  roster        Int?
+}
+
+model Position {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(32)
+  sportRel  Sport   @relation(fields: [sport], references: [id])
+  sport     Int
+  players   Player[]
+}
+
+model Roster {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(32)
+  divisionRel Division @relation(fields: [division], references: [id])
+  division    Int
+  coachRel    User    @relation(fields: [coach], references: [id])
+  coach       Int
+  players     Player[]
+}
+
+model Sport {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(32) @unique
+  leagues   League[]
+  positions Position[]
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(32)
+  email       String    @db.VarChar(64)
+  phoneNumber String    @db.VarChar(25)
+  dateOfBirth DateTime  @db.Date
+  coach       Boolean   @default(false)
+  volunteer   Boolean   @default(false)
+  role        Role      @default(USER)
+  password    String    @db.VarChar(255)
+  token       String?   @db.VarChar(255)
+  expiration  DateTime? @db.Date
+  league      League[]
+  players     Player[]
+  rosters     Roster[]
+}
+
+enum Role {
+  MASTER_ADMIN
+  ADMIN
+  USER
+}
