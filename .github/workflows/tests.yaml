@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Leagueify Tests
-        run: DATABASE_URI=postgresql://leagueify:password@localhost:5432/leagueify?schema=public DATABASE_USER=leagueify DATABASE_PASS=password npx playwright test
+        run: DATABASE_URI=postgresql://leagueify:password@localhost:5432/leagueify?schema=public DATABASE_USER=leagueify DATABASE_PASS=password npm run test
 
       - name: Upload Test Results
         if: always()

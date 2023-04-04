@@ -71,20 +71,19 @@ docker build -t leagueify .
 
 This will build the image and all associated microservices with the tag `leagueify:latest`.
 
-## Executing Tests
+## Executing Tests Locally
 
-To run the test suite for Leagueify, run:
+Once a Pull Request has been created, GitHub Actions will run all Leagueify tests. In order to catch and test failures prior to the creation of a Pull Request execute the following commands:
 
 ```bash
 # Install Playwright Dependencies
 npx playwright install
 
+# Bring up the Leagueify Stack
+docker compose up -d
+
 # Run Full Test Suite
-npm run test
-
-# Run End-to-End Test Suite
-npm run test:e2e
-
-# Run Unit Test Suite
-npm run test:unit
+DATABASE_URI=postgresql://leagueify:password@localhost:5432/leagueify?schema=public DATABASE_USER=leagueify DATABASE_PASS=password npm run test
 ```
+
+**NOTE:** To execute either of the **e2e** or **unit test** suites, include either `:e2e` or `:unit` after the `test` command. For example, to run only the **e2e** tests, run `npm run test:e2e`.
