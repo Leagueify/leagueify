@@ -25,8 +25,6 @@ export const actions: Actions = {
     const data = await request.formData();
     data.append("domain", request.headers.get("host"));
 
-    console.log(data);
-
     throw redirect(303, "/");
   },
 } satisfies Actions;

@@ -17,7 +17,6 @@
     novalidate
     on:keydown={(event) => event.key === "Enter" && event.preventDefault()}
     use:enhance={({ data }) => {
-      console.log($formData);
       for (const [key, value] of Object.entries($formData)) {
         data.set(key, value);
       }
