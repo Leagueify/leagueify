@@ -23,7 +23,7 @@
     "prisma": "^4.13.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.32.3",
+    "@playwright/test": "^1.33.0",
     "@sveltejs/adapter-auto": "^2.0.1",
     "@sveltejs/adapter-node": "^1.2.3",
     "@sveltejs/kit": "^1.15.7",
