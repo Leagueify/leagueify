@@ -1,12 +1,17 @@
 <script lang="ts">
+  // 3rd Party Imports
   import { Step } from "@skeletonlabs/skeleton";
-
-  import { formData } from "$lib/stores";
+  // Type Imports
+  import type { PageData } from "./types";
+  // Leagueify Imports
+  import { formStore } from "$lib/stores";
+  // Variables
+  export const data: PageData = {};
 </script>
 
 <Step>
   <span slot="header">Account Details</span>
-  <span> Please enter your account details below.</span>
+  <span>Please enter your account details below.</span>
   <label class="label">
     <span>Your Name</span>
     <input
@@ -15,7 +20,7 @@
       name="userName"
       placeholder="Your Name"
       maxlength="32"
-      bind:value={formData.userName} />
+      bind:value={$formStore.userName} />
   </label>
   <label class="label">
     <span>Date of Birth</span>
@@ -24,7 +29,8 @@
       class="input variant-form-material"
       name="userDOB"
       placeholder="MM/DD/YYYY"
-      bind:value={formData.userDOB} />
+      max="9999-12-31"
+      bind:value={$formStore.userDOB} />
   </label>
   <label class="label">
     <span>Email Address</span>
@@ -34,7 +40,7 @@
       name="userEmail"
       placeholder="user@example.com"
       maxlength="64"
-      bind:value={formData.userEmail} />
+      bind:value={$formStore.userEmail} />
   </label>
   <label class="label">
     <span>Password</span>
@@ -44,7 +50,7 @@
       name="userPass"
       placeholder="********"
       maxlength="255"
-      bind:value={formData.userPass} />
+      bind:value={$formStore.userPass} />
   </label>
   <label class="label">
     <span>Phone Number</span>
@@ -54,6 +60,6 @@
       name="userPhone"
       placeholder="(555) 555-5555"
       maxlength="25"
-      bind:value={formData.userPhone} />
+      bind:value={$formStore.userPhone} />
   </label>
 </Step>

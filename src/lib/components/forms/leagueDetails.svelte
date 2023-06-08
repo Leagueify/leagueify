@@ -1,21 +1,17 @@
 <script lang="ts">
+  // 3rd Party Imports
   import { Step } from "@skeletonlabs/skeleton";
-
-  import { formData } from "$lib/stores";
-
-  export let data: object;
-  let formLocked = false;
-  let leagueName = $formData.leagueName;
-  let leagueSport = $formData.leagueSport;
-
-  async function validateStep() {
-    formLocked = leagueName.length >= 3 && leagueSport !== "none";
-  }
+  // Type Imports
+  import type { PageData } from "./types";
+  // Leagueify Imports
+  import { formStore } from "$lib/stores";
+  // Variables
+  export let data: PageData = {};
 </script>
 
-<Step locked={!formLocked}>
+<Step>
   <span slot="header">League Details</span>
-  <span> This is where you will specify your league name and sport.</span>
+  <span>This is where you will create your league.</span>
   <label class="label">
     <span>League Name</span>
     <input
@@ -25,22 +21,20 @@
       id="leagueName"
       placeholder="League Name"
       maxlength="64"
-      bind:value={leagueName}
-      on:input={validateStep} />
+      bind:value={$formStore.leagueName} />
   </label>
   <label class="label">
     <span>League Sport</span>
     <select
       class="select variant-form-material"
       name="leagueSport"
-      bind:value={leagueSport}
-      on:change={validateStep}>
+      bind:value={$formStore.leagueSport}>
       <option
         value="none"
         disabled
         selected>Select League Sport</option>
       {#each data.supportedSports as sport}
-        <option value={sport.name}>{sport.name}</option>
+        <option value={sport.id}>{sport.name}</option>
       {/each}
     </select>
   </label>

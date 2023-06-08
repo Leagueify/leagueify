@@ -1,12 +1,17 @@
 <script lang="ts">
+  // 3rd Party Imports
   import { Step } from "@skeletonlabs/skeleton";
-
-  import { formData } from "$lib/stores";
+  // Type Imports
+  import type { PageData } from "./types";
+  // Leagueify Imports
+  import { formStore } from "$lib/stores";
+  // Variables
+  export const data: PageData = {};
 </script>
 
 <Step>
   <span slot="header">League Email Configuration</span>
-  <span> Configure your league's email settings.</span>
+  <span>Configure your league's email settings.</span>
   <label class="label">
     <span>League Outbound Email</span>
     <input
@@ -15,7 +20,7 @@
       name="leagueOutboundEmail"
       placeholder="noreply@leagueify.org"
       maxlength="64"
-      bind:value={$formData.leagueOutboundEmail} />
+      bind:value={$formStore.leagueOutboundEmail} />
   </label>
   <label class="label">
     <span>SMTP Host</span>
@@ -25,7 +30,7 @@
       name="leagueSMTPHost"
       placeholder="smtp.gmail.com"
       maxlength="255"
-      bind:value={$formData.leagueSMTPHost} />
+      bind:value={$formStore.leagueSMTPHost} />
   </label>
   <label class="label">
     <span>SMTP Port</span>
@@ -33,9 +38,9 @@
       type="number"
       class="input variant-form-material"
       name="leagueSMTPPort"
-      placeholder="587"
+      placeholder="465"
       maxlength="5"
-      bind:value={$formData.leagueSMTPPort} />
+      bind:value={$formStore.leagueSMTPPort} />
   </label>
   <label class="label">
     <span>SMTP Username</span>
@@ -45,7 +50,7 @@
       name="leagueSMTPUser"
       placeholder="SMTPUser"
       maxlength="64"
-      bind:value={$formData.leagueSMTPUser} />
+      bind:value={$formStore.leagueSMTPUser} />
   </label>
   <label class="label">
     <span>SMTP Password</span>
@@ -55,6 +60,6 @@
       name="leagueSMTPPass"
       placeholder="********"
       maxlength="255"
-      bind:value={$formData.leagueSMTPPass} />
+      bind:value={$formStore.leagueSMTPPass} />
   </label>
 </Step>
