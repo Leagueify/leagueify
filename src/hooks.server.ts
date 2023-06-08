@@ -7,28 +7,34 @@ import database from "$lib/server/database";
 import { leagueStore } from "$lib/stores";
 
 export const handle = (async ({ event, resolve }) => {
-  if (event.url.pathname === "/register") {
-    const response = await resolve(event);
-    return response;
-  }
-
+  // If League is not installed, redirect to install page
   if (!get(leagueStore).installed) {
-    // This request will be changed in the 1.0.0 release
-    // Currently, this is for testing purposes
-    // This validation will be updated with new validation method
+    if (event.url.pathname === "/install") {
+      return await resolve(event);
+    }
+
+    // Need to update validation method
+    // Based on User?
     const league = await database.league.findUnique({
       where: {
         domain: event.url.hostname,
       },
     });
 
-    if (!league) {
-      throw redirect(307, "/register");
+    if (!league?.isActive) {
+      throw redirect(307, "/install");
     }
 
+    // Set League as Installed
     leagueStore.set({ installed: true });
   }
 
+  // If user attempts to access install page, redirect to home page
+  if (event.url.pathname === "/install") {
+    throw redirect(307, "/");
+  }
+
+  // Handle all other requests
   const response = await resolve(event);
   return response;
 }) satisfies Handle;
