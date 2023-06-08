@@ -15,6 +15,7 @@ CREATE TABLE "Division" (
 -- CreateTable
 CREATE TABLE "EmailConfig" (
     "id" SERIAL NOT NULL,
+    "outboundEmail" VARCHAR(64) NOT NULL,
     "smtpHost" VARCHAR(255) NOT NULL,
     "smtpPort" INTEGER NOT NULL,
     "smtpUser" VARCHAR(255) NOT NULL,
@@ -32,6 +33,7 @@ CREATE TABLE "League" (
     "sport" INTEGER NOT NULL,
     "leagueAdmin" INTEGER NOT NULL,
     "emailConfig" INTEGER,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "League_pkey" PRIMARY KEY ("id")
 );
@@ -40,7 +42,7 @@ CREATE TABLE "League" (
 CREATE TABLE "Player" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(32) NOT NULL,
-    "dateOfBirth" DATE NOT NULL,
+    "dateOfBirth" BIGINT NOT NULL,
     "yearsPlayed" INTEGER NOT NULL,
     "position" INTEGER NOT NULL,
     "division" INTEGER NOT NULL,
@@ -86,13 +88,14 @@ CREATE TABLE "User" (
     "name" VARCHAR(32) NOT NULL,
     "email" VARCHAR(64) NOT NULL,
     "phoneNumber" VARCHAR(25) NOT NULL,
-    "dateOfBirth" VARCHAR(10) NOT NULL,
+    "dateOfBirth" BIGINT NOT NULL,
     "coach" BOOLEAN NOT NULL DEFAULT false,
     "volunteer" BOOLEAN NOT NULL DEFAULT false,
     "role" "Role" NOT NULL DEFAULT 'USER',
     "password" VARCHAR(255) NOT NULL,
     "token" VARCHAR(255),
-    "expiration" DATE,
+    "expiration" BIGINT,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -105,6 +108,9 @@ CREATE UNIQUE INDEX "League_emailConfig_key" ON "League"("emailConfig");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Sport_name_key" ON "Sport"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_token_key" ON "User"("token");
 
 -- AddForeignKey
 ALTER TABLE "Division" ADD CONSTRAINT "Division_league_fkey" FOREIGN KEY ("league") REFERENCES "League"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

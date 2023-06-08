@@ -10,7 +10,7 @@ datasource db {
 
 model Division {
   id        Int     @id @default(autoincrement())
-  leagueRel League @relation(fields: [league], references: [id])
+  leagueRel League  @relation(fields: [league], references: [id])
   league    Int
   name      String  @db.VarChar(24)
   minAge    Int
@@ -42,12 +42,13 @@ model League {
   emailConfig     Int?          @unique
   divisions       Division[]
   players         Player[]
+  isActive        Boolean       @default(false)
 }
 
 model Player {
   id            Int       @id @default(autoincrement())
   name          String    @db.VarChar(32)
-  dateOfBirth   DateTime  @db.Date
+  dateOfBirth   BigInt
   yearsPlayed   Int
   positionRel   Position  @relation(fields: [position], references: [id])
   position      Int
@@ -93,13 +94,14 @@ model User {
   name        String    @db.VarChar(32)
   email       String    @db.VarChar(64)
   phoneNumber String    @db.VarChar(25)
-  dateOfBirth DateTime  @db.Date
+  dateOfBirth BigInt
   coach       Boolean   @default(false)
   volunteer   Boolean   @default(false)
   role        Role      @default(USER)
   password    String    @db.VarChar(255)
-  token       String?   @db.VarChar(255)
-  expiration  DateTime? @db.Date
+  token       String?   @db.VarChar(255) @unique
+  expiration  BigInt?
+  isActive    Boolean   @default(false)
   league      League[]
   players     Player[]
   rosters     Roster[]
