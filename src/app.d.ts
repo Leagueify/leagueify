@@ -3,7 +3,11 @@
 // and what to do when importing types
 declare namespace App {
   // interface Locals {}
-  // interface PageData {}
+  interface PageData {
+    league?: object;
+    formData?: object;
+    supportedSports?: object;
+  }
   // interface Error {}
   // interface Platform {}
 }
