@@ -11,9 +11,9 @@
 </script>
 
 <Step>
-  <span slot="header">{$formStore.leagueSport} Positions</span>
+  <span slot="header">Player Positions</span>
   <span
-    >Please enter {$formStore.leagueSport} positions for {$formStore.leagueName}.</span>
+    >Please enter available player positions for {$formStore.leagueName}.</span>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label">
     <span>Player Positions</span>
