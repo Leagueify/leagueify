@@ -19,7 +19,7 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^4.15.0",
     "prisma": "^4.15.0"
   },
   "devDependencies": {
