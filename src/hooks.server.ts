@@ -1,40 +1,103 @@
+// 3rd Party Imports
 import { redirect } from "@sveltejs/kit";
-import { get } from "svelte/store";
-
-import type { Handle } from "@sveltejs/kit";
-
+// Type Imports
+import type { Handle, RequestEvent } from "@sveltejs/kit";
+// Leagueify Imports
 import database from "$lib/server/database";
-import { leagueStore } from "$lib/stores";
+import * as auth from "$lib/utils/auth";
 
+// Handle Requests
 export const handle = (async ({ event, resolve }) => {
-  // If League is not installed, redirect to install page
-  if (!get(leagueStore).installed) {
-    if (event.url.pathname === "/install") {
-      return await resolve(event);
-    }
+  const route = event.url.pathname;
 
-    // Need to update validation method
-    // Based on User?
-    const league = await database.league.findUnique({
-      where: {
-        domain: event.url.hostname,
-      },
-    });
-
-    if (!league?.isActive) {
-      throw redirect(307, "/install");
-    }
-
-    // Set League as Installed
-    leagueStore.set({ installed: true });
+  // Handle Activation Routes
+  if (route.includes("/activate/")) {
+    await activate(event);
   }
 
-  // If user attempts to access install page, redirect to home page
-  if (event.url.pathname === "/install") {
-    throw redirect(307, "/");
-  }
+  // Handle Installation
+  await checkInstallation(event, route);
 
   // Handle all other requests
   const response = await resolve(event);
   return response;
 }) satisfies Handle;
+
+async function activate(event: RequestEvent) {
+  const activationType: string = event.url.pathname.replace("/activate/", "");
+  const activationToken: string = event.url.searchParams.get("token") || "";
+
+  const validToken = await auth.verifyAuth(activationToken);
+
+  if (validToken) {
+    const authToken = auth.generateToken(64);
+    // Activate User
+    await database.user.update({
+      where: {
+        token: activationToken,
+      },
+      data: {
+        token: authToken,
+        expiration: auth.generateTokenExpiration(1440),
+        isActive: true,
+      },
+    });
+    // If activation type is league, activate league
+    if (activationType === "league") {
+      await database.league.update({
+        where: {
+          domain: event.url.hostname,
+        },
+        data: {
+          isActive: true,
+        },
+      });
+    }
+    // Set Cookies
+    event.cookies.set("token", authToken, { path: "/" });
+  }
+
+  throw redirect(303, "/");
+}
+
+async function checkInstallation(event: RequestEvent, route: string) {
+  const installationState = event.cookies.get("Leagueify-Installed");
+
+  event.locals = {
+    installationState: installationState,
+    ...event.locals,
+  };
+
+  // If installation cookie is not set
+  if (installationState !== "active") {
+    // Check database for an active league with the current domain
+    const league = await database.league.findFirst({
+      where: {
+        domain: event.url.hostname,
+      },
+    });
+
+    event.locals = {
+      league: league,
+      ...event.locals,
+    };
+
+    // If no league is found, redirect to installation route
+    if (!league?.isActive && route !== "/install") {
+      throw redirect(307, "/install");
+    } else if (!league?.isActive && route === "/install") {
+      return;
+    }
+
+    // Update Installation Cookie
+    event.cookies.set("Leagueify-Installed", "active", {
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      path: "/",
+    });
+  }
+
+  // If on installation route, redirect to index
+  if (route === "/install") {
+    throw redirect(307, "/");
+  }
+}
