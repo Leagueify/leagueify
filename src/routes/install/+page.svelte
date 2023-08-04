@@ -1,8 +1,9 @@
 <script lang="ts">
   // 3rd Party Imports
   import { Step, Stepper } from "@skeletonlabs/skeleton";
+  import { page } from "$app/stores";
   // Type Imports
-  import type { PageData } from "./types";
+  import type { PageData } from "./$types";
   // Leagueify Imports
   import Form from "$lib/components/forms.svelte";
   import AccountDetails from "$lib/components/forms/accountDetails.svelte";
@@ -15,13 +16,17 @@
   let onComplete: any;
 </script>
 
-<div class="container h-full mx-auto flex justify-center items-center">
+<svelte:head>
+  <title>Install Leagueify</title>
+</svelte:head>
+
+{#if !$page.data.installedState}
   <Form action="?/install">
     <Stepper
       slot="formContent"
       buttonCompleteLabel="Submit"
       buttonCompleteType="submit"
-      on:complete={onComplete}>
+      on:complete|once={onComplete}>
       <Step>
         <span slot="header">Welcome to Leagueify!</span>
         <span
@@ -36,4 +41,6 @@
       <AccountDetails {data} />
     </Stepper>
   </Form>
-</div>
+{:else}
+  <span>Please verify your account.</span>
+{/if}

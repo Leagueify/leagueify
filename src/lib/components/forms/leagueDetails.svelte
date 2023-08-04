@@ -2,7 +2,7 @@
   // 3rd Party Imports
   import { Step } from "@skeletonlabs/skeleton";
   // Type Imports
-  import type { PageData } from "./types";
+  import type { PageData } from "./$types";
   // Leagueify Imports
   import { formStore } from "$lib/stores";
   // Variables

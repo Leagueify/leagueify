@@ -10,8 +10,10 @@ import * as auth from "$lib/utils/auth";
 export const handle = (async ({ event, resolve }) => {
   const route = event.url.pathname;
 
+  await userAuthentication(event, route);
+
   // Handle Activation Routes
-  if (route.includes("/activate/")) {
+  if (route.includes("/activate")) {
     await activate(event);
   }
 
@@ -20,6 +22,7 @@ export const handle = (async ({ event, resolve }) => {
 
   // Handle all other requests
   const response = await resolve(event);
+  // console.log(response)
   return response;
 }) satisfies Handle;
 
@@ -32,7 +35,7 @@ async function activate(event: RequestEvent) {
   if (validToken) {
     const authToken = auth.generateToken(64);
     // Activate User
-    await database.user.update({
+    const user = await database.user.update({
       where: {
         token: activationToken,
       },
@@ -54,7 +57,15 @@ async function activate(event: RequestEvent) {
       });
     }
     // Set Cookies
-    event.cookies.set("token", authToken, { path: "/" });
+    event.cookies.set("Leagueify-Token", authToken, {
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      path: "/",
+    });
+
+    event.locals = {
+      user: user,
+      ...event.locals,
+    };
   }
 
   throw redirect(303, "/");
@@ -99,5 +110,75 @@ async function checkInstallation(event: RequestEvent, route: string) {
   // If on installation route, redirect to index
   if (route === "/install") {
     throw redirect(307, "/");
+  }
+}
+
+async function userAuthentication(event: RequestEvent, route: string) {
+  const token = event.cookies.get("Leagueify-Token");
+
+  if (token && await auth.verifyAuth(token, true)) {
+    const user = await database.user.findFirst({
+      where: {
+        token: token,
+      },
+    });
+
+    event.locals = {
+      user: user,
+      ...event.locals,
+    };
+
+    if (route === "/logout") {
+      // await database.user.update({
+      //   where: {
+      //     id: user?.id,
+      //   },
+      //   data: {
+      //     token: null,
+      //     expiration: null,
+      //   },
+      // });
+
+      // event.cookies.delete("Leagueify-Token");
+      // event.locals.user = null;
+      throw redirect(303, "/");
+    }
+  }
+
+  if (route === "/login") {
+    const formData = await event.request.formData();
+
+    if (formData.get("userEmail") && formData.get("userPass")) {
+      const user = await database.user.findFirst({
+        where: {
+          email: formData.get("userEmail")?.toString(),
+        },
+      });
+
+      if (user && auth.verifyCredentials(formData.get("userPass").toString(), user.password)) {
+        const authToken = auth.generateToken(64);
+        await database.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            token: authToken,
+            expiration: auth.generateTokenExpiration(1440),
+          },
+        });
+
+        event.cookies.set("Leagueify-Token", authToken, {
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          path: "/",
+        });
+
+        event.locals = {
+          user: user,
+          ...event.locals,
+        };
+
+        throw redirect(303, "/");
+      }
+    }
   }
 }

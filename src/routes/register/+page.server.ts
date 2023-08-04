@@ -1,30 +1,48 @@
+// 3rd Party Imports
 import { redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
-import type { Actions, PageServerLoad } from "./types";
-
+// Type Imports
+import type { Actions, PageData, PageServerLoad } from "./$types";
+// Leagueify Imports
 import database from "$lib/server/database";
-import { leagueStore } from "$lib/stores";
+// import * as email from "$lib/server/email";
+import { leagueStore, userStore } from "$lib/stores";
+import * as auth from "$lib/utils/auth";
 
-const leagueInstalled = get(leagueStore).installed;
+// Load Function
+// export const load: PageServerLoad = async ({ cookies, request, url }) => {
+//   return
+// };
 
-const data: object = {};
+// Register Action
+export const actions: Actions = {
+  register: async ({ request }) => {
+    const data: PageData = await request.formData();
 
-export const load = (async () => {
-  if (!leagueInstalled) {
-    data.supportedSports = await database.sport.findMany({
-      orderBy: {
-        name: "asc",
+    // Create User
+    const user = await database.user.create({
+      data: {
+        name: data.get("userName"),
+        email: data.get("userEmail"),
+        phoneNumber: data.get("userPhone"),
+        dateOfBirth: new Date(data.get("userDOB")).valueOf(),
+        role: "USER",
+        password: auth.hashPassword(data.get("userPass")),
+        token: auth.generateToken(),
+        expiration: auth.generateTokenExpiration(),
       },
     });
-    return data;
-  }
-}) satisfies PageServerLoad;
 
-export const actions: Actions = {
-  default: async ({ request }) => {
-    const data = await request.formData();
-    data.append("domain", request.headers.get("host"));
+    // Set Stores
+    userStore.set({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
+
+    // Send User Registration Confirmation Email
+    email.userCreation();
 
     throw redirect(303, "/");
   },
-} satisfies Actions;
+};
