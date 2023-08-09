@@ -61,12 +61,14 @@
                 class="btn-icon !bg-transparent">
                 <span class="material-icons-sharp">settings</span>
               </button>
-              <a
-                data-sveltekit-reload
-                href="/logout"
-                class="btn-icon !bg-transparent">
-                <span class="material-icons-sharp">logout</span>
-              </a>
+              <!-- User Logout Button -->
+              <form action="/user?/logout" method="POST">
+                <button
+                  type="submit"
+                  class="btn-icon !bg-transparent">
+                  <span class="material-icons-sharp">logout</span>
+                </button>
+              </form>
             </div>
           {:else}
             <button

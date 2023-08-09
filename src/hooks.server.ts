@@ -127,58 +127,5 @@ async function userAuthentication(event: RequestEvent, route: string) {
       user: user,
       ...event.locals,
     };
-
-    if (route === "/logout") {
-      // await database.user.update({
-      //   where: {
-      //     id: user?.id,
-      //   },
-      //   data: {
-      //     token: null,
-      //     expiration: null,
-      //   },
-      // });
-
-      // event.cookies.delete("Leagueify-Token");
-      // event.locals.user = null;
-      throw redirect(303, "/");
-    }
-  }
-
-  if (route === "/login") {
-    const formData = await event.request.formData();
-
-    if (formData.get("userEmail") && formData.get("userPass")) {
-      const user = await database.user.findFirst({
-        where: {
-          email: formData.get("userEmail")?.toString(),
-        },
-      });
-
-      if (user && auth.verifyCredentials(formData.get("userPass").toString(), user.password)) {
-        const authToken = auth.generateToken(64);
-        await database.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            token: authToken,
-            expiration: auth.generateTokenExpiration(1440),
-          },
-        });
-
-        event.cookies.set("Leagueify-Token", authToken, {
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-          path: "/",
-        });
-
-        event.locals = {
-          user: user,
-          ...event.locals,
-        };
-
-        throw redirect(303, "/");
-      }
-    }
   }
 }
