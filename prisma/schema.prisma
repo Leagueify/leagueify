@@ -36,8 +36,6 @@ model League {
   domain          String        @db.VarChar(255) @unique
   sportRel        Sport         @relation(fields: [sport], references: [id])
   sport           Int
-  leagueAdminRel  User          @relation(fields: [leagueAdmin], references: [id])
-  leagueAdmin     Int
   emailConfigRel  EmailConfig?  @relation(fields: [emailConfig], references: [id])
   emailConfig     Int?          @unique
   divisions       Division[]
@@ -102,7 +100,6 @@ model User {
   token       String?   @db.VarChar(255) @unique
   expiration  BigInt?
   isActive    Boolean   @default(false)
-  league      League[]
   players     Player[]
   rosters     Roster[]
 }
