@@ -21,8 +21,6 @@
     type: "component",
     component: modalComponentRegistry.loginModal,
   };
-
-  console.log("LAYOUT $page.data ::", $page.data);
 </script>
 
 {#if $page.data.installedState !== "active"}

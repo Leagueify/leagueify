@@ -10,8 +10,6 @@
   // Variables
   export let data: PageData;
   let onComplete: any;
-
-  console.log($page);
 </script>
 
 <Form action="?/register">

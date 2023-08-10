@@ -22,7 +22,6 @@ export const handle = (async ({ event, resolve }) => {
 
   // Handle all other requests
   const response = await resolve(event);
-  // console.log(response)
   return response;
 }) satisfies Handle;
 
