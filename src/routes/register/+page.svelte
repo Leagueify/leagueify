@@ -12,7 +12,7 @@
   let onComplete: any;
 </script>
 
-<Form action="?/register">
+<Form action="/account?/register">
   <Stepper
     slot="formContent"
     buttonCompleteLabel="Submit"

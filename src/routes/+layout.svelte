@@ -60,7 +60,9 @@
                 <span class="material-icons-sharp">settings</span>
               </button>
               <!-- User Logout Button -->
-              <form action="/user?/logout" method="POST">
+              <form
+                action="/account?/logout"
+                method="POST">
                 <button
                   type="submit"
                   class="btn-icon !bg-transparent">

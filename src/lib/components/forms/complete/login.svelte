@@ -8,7 +8,7 @@
   export let data: PageData;
 </script>
 
-<Form action="/user?/login">
+<Form action="/account?/login">
   <svelte:fragment slot="formContent">
     <EmailPassword {data} />
     <button
