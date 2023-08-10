@@ -41,6 +41,7 @@ model League {
   emailConfigRel  EmailConfig?  @relation(fields: [emailConfig], references: [id])
   emailConfig     Int?          @unique
   divisions       Division[]
+  positions       Position[]
   players         Player[]
   isActive        Boolean       @default(false)
 }
@@ -67,8 +68,8 @@ model Player {
 model Position {
   id        Int     @id @default(autoincrement())
   name      String  @db.VarChar(32)
-  sportRel  Sport   @relation(fields: [sport], references: [id])
-  sport     Int
+  leagueRel League  @relation(fields: [league], references: [id])
+  league    Int
   players   Player[]
 }
 
@@ -86,7 +87,6 @@ model Sport {
   id        Int     @id @default(autoincrement())
   name      String  @db.VarChar(32) @unique
   leagues   League[]
-  positions Position[]
 }
 
 model User {
