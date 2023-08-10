@@ -115,7 +115,7 @@ async function checkInstallation(event: RequestEvent, route: string) {
 async function userAuthentication(event: RequestEvent, route: string) {
   const token = event.cookies.get("Leagueify-Token");
 
-  if (token && await auth.verifyAuth(token, true)) {
+  if (token && (await auth.verifyAuth(token, true))) {
     const user = await database.user.findFirst({
       where: {
         token: token,
