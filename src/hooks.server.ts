@@ -27,7 +27,7 @@ export const handle = (async ({ event, resolve }) => {
     )
       await account.activate(event);
 
-    throw redirect(303, "/")
+    throw redirect(303, "/");
   }
 
   await league.isInstalled(event, route);
