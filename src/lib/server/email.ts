@@ -54,8 +54,8 @@ export async function userCreation(user: UserData, domain: string) {
     from: `${league.name} <${emailConfig.outboundEmail}>`,
     to: user.email,
     subject: "Please Verify Your Email Address!",
-    text: `Please verify your email address. http://${league.domain}/activate/user?token=${user.token}`,
-    html: `<p>Thank you for using Leagueify! A league for <strong>${league.name}</strong> has been created.</p><p>Please verify your email address <a href="http://${league.domain}/activate/league?token=${user.token}" target="_blank">here</a>.</p>`,
+    text: `Please verify your email address. http://${league.domain}/activate/account?token=${user.token}`,
+    html: `<p>Thank you for using Leagueify! A league for <strong>${league.name}</strong> has been created.</p><p>Please verify your email address <a href="http://${league.domain}/activate/account?token=${user.token}" target="_blank">here</a>.</p>`,
   });
 }
 

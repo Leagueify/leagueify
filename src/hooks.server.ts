@@ -1,3 +1,5 @@
+// 3rd Party Imports
+import { redirect } from "@sveltejs/kit";
 // Type Imports
 import type { Handle } from "@sveltejs/kit";
 // Leagueify Imports
@@ -24,6 +26,8 @@ export const handle = (async ({ event, resolve }) => {
       (await auth.verifyAuth(activationToken))
     )
       await account.activate(event);
+
+    throw redirect(303, "/")
   }
 
   await league.isInstalled(event, route);
