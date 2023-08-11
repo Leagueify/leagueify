@@ -31,7 +31,6 @@ CREATE TABLE "League" (
     "name" VARCHAR(64) NOT NULL,
     "domain" VARCHAR(255) NOT NULL,
     "sport" INTEGER NOT NULL,
-    "leagueAdmin" INTEGER NOT NULL,
     "emailConfig" INTEGER,
     "isActive" BOOLEAN NOT NULL DEFAULT false,
 
@@ -59,7 +58,7 @@ CREATE TABLE "Player" (
 CREATE TABLE "Position" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(32) NOT NULL,
-    "sport" INTEGER NOT NULL,
+    "league" INTEGER NOT NULL,
 
     CONSTRAINT "Position_pkey" PRIMARY KEY ("id")
 );
@@ -119,9 +118,6 @@ ALTER TABLE "Division" ADD CONSTRAINT "Division_league_fkey" FOREIGN KEY ("leagu
 ALTER TABLE "League" ADD CONSTRAINT "League_sport_fkey" FOREIGN KEY ("sport") REFERENCES "Sport"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "League" ADD CONSTRAINT "League_leagueAdmin_fkey" FOREIGN KEY ("leagueAdmin") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "League" ADD CONSTRAINT "League_emailConfig_fkey" FOREIGN KEY ("emailConfig") REFERENCES "EmailConfig"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -140,7 +136,7 @@ ALTER TABLE "Player" ADD CONSTRAINT "Player_league_fkey" FOREIGN KEY ("league") 
 ALTER TABLE "Player" ADD CONSTRAINT "Player_roster_fkey" FOREIGN KEY ("roster") REFERENCES "Roster"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Position" ADD CONSTRAINT "Position_sport_fkey" FOREIGN KEY ("sport") REFERENCES "Sport"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Position" ADD CONSTRAINT "Position_league_fkey" FOREIGN KEY ("league") REFERENCES "League"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Roster" ADD CONSTRAINT "Roster_division_fkey" FOREIGN KEY ("division") REFERENCES "Division"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

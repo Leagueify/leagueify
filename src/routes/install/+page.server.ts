@@ -1,11 +1,13 @@
 // 3rd Party Imports
 import { redirect } from "@sveltejs/kit";
 // Type Imports
-import type { Actions, PageData, PageServerLoad } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 // Leagueify Imports
-import * as auth from "$lib/utils/auth";
+import * as account from "$lib/server/account";
 import database from "$lib/server/database";
 import * as email from "$lib/server/email";
+import * as league from "$lib/server/league";
+import { UserRoles } from "$lib/interfaces";
 
 // Install Load Function
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -27,66 +29,21 @@ export const load: PageServerLoad = async ({ cookies }) => {
 // Install Actions
 export const actions: Actions = {
   install: async ({ cookies, locals, request }) => {
-    const data: PageData = await request.formData();
-    data.append("domain", request.headers.get("host"));
+    const data: FormData = await request.formData();
+    data.set("domain", request.headers.get("host") as string);
 
-    // Add all database calls to transaction
-    const user = await database.user.create({
-      data: {
-        name: data.get("userName"),
-        email: data.get("userEmail"),
-        phoneNumber: data.get("userPhone"),
-        dateOfBirth: new Date(data.get("userDOB")).valueOf(),
-        role: !data.installedState ? "MASTER_ADMIN" : "USER",
-        password: auth.hashPassword(data.get("userPass")),
-        token: auth.generateToken(),
-        expiration: auth.generateTokenExpiration(),
-      },
-    });
-
-    const emailConfig = await database.emailConfig.create({
-      data: {
-        outboundEmail: data.get("leagueOutboundEmail"),
-        smtpHost: data.get("leagueSMTPHost"),
-        smtpPort: Number.parseInt(data.get("leagueSMTPPort")),
-        smtpUser: data.get("leagueSMTPUser"),
-        smtpPass: data.get("leagueSMTPPass"),
-      },
-    });
-
-    const league = await database.league.create({
-      data: {
-        name: data.get("leagueName"),
-        domain: data.get("domain"),
-        sport: Number.parseInt(data.get("leagueSport")),
-        leagueAdmin: user.id,
-        emailConfig: emailConfig.id,
-      },
-    });
-
-    // Set Positions
-    const positions: Array<any> = [];
-    data
-      .get("leaguePositions")
-      .split(",")
-      .forEach(async (position: string) => {
-        positions.push({
-          name: position,
-          sport: Number.parseInt(data.get("leagueSport")),
-        });
-      });
-    await database.position.createMany({
-      data: positions,
-    });
-
-    // Set Divisions
-    const divisions: Array<any> = JSON.parse(data.getAll("leagueDivisions"));
-    divisions.forEach(async (division) => {
-      division.league = league.id;
-    });
-    await database.division.createMany({
-      data: divisions,
-    });
+    // TODO: Move to Transaction
+    const installUser = await account.create(data, UserRoles.MASTER_ADMIN);
+    const installEmailConfig = await email.createConfig(data);
+    const installLeague = await league.create(data, installEmailConfig.id);
+    const installPositions = await league.createPositions(
+      data,
+      installLeague.id
+    );
+    const installDivisions = await league.createDivisions(
+      data,
+      installLeague.id
+    );
 
     // Set Cookie to installed and set expiration to 1 day from now
     cookies.set("Leagueify-Installed", "installed", {
@@ -94,24 +51,7 @@ export const actions: Actions = {
       path: "/",
     });
 
-    // REFACTOR - Send League and User Creation Email
-    email.leagueCreation(
-      {
-        outboundEmail: emailConfig.outboundEmail,
-        smtpHost: emailConfig.smtpHost,
-        smtpPort: emailConfig.smtpPort,
-        smtpUser: emailConfig.smtpUser,
-        smtpPass: emailConfig.smtpPass,
-      },
-      {
-        name: league.name,
-        domain: league.domain,
-      },
-      {
-        email: user.email,
-        token: user.token,
-      }
-    );
+    email.leagueCreation(installUser, installLeague);
 
     throw redirect(303, "/");
   },

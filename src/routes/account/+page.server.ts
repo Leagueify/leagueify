@@ -1,17 +1,18 @@
-// 34d Party Imports
+// 3rd Party Imports
 import { redirect } from "@sveltejs/kit";
 // Type Imports
 import type { Actions } from "./$types";
 // Leagueify Imports
-import database from "$lib/server/database";
+import * as account from "$lib/server/account";
 import * as auth from "$lib/utils/auth";
+import database from "$lib/server/database";
+import * as email from "$lib/server/email";
+import { userStore } from "$lib/stores";
+import { UserRoles } from "$lib/interfaces";
 
 export const actions: Actions = {
-  login: async ({ cookies, request } ) => {
-    console.log("Attempting to login...")
+  login: async ({ cookies, request }) => {
     const formData = await request.formData();
-
-    console.log(formData)
 
     if (formData.get("userEmail") && formData.get("userPass")) {
       const user = await database.user.findFirst({
@@ -20,7 +21,13 @@ export const actions: Actions = {
         },
       });
 
-      if (user && auth.verifyCredentials(formData.get("userPass").toString(), user.password)) {
+      if (
+        user &&
+        auth.verifyCredentials(
+          formData.get("userPass").toString(),
+          user.password
+        )
+      ) {
         const authToken = auth.generateToken(64);
         await database.user.update({
           where: {
@@ -36,7 +43,6 @@ export const actions: Actions = {
           maxAge: 1440,
           path: "/",
         });
-
       }
     }
     throw redirect(303, "/");
@@ -49,6 +55,20 @@ export const actions: Actions = {
     throw redirect(303, "/");
   },
 
-  // TODO: Implement
-  // register: async ({ event, request }) => {},
+  register: async ({ request }) => {
+    const data: FormData = await request.formData();
+
+    const registerUser = await account.create(data, UserRoles.USER);
+
+    email.userCreation(registerUser, request.headers.get("host"));
+
+    // Set Stores
+    userStore.set({
+      id: registerUser.id,
+      name: registerUser.name,
+      email: registerUser.email,
+    });
+
+    throw redirect(303, "/");
+  },
 };

@@ -6,11 +6,11 @@ import database from "$lib/server/database";
 
 const saltRounds = 12;
 
-export function generateToken(length: number = 32): string {
+export function generateToken(length = 32): string {
   return crypto.randomBytes(length).toString("base64url");
 }
 
-export function generateTokenExpiration(minutes: number = 10): number {
+export function generateTokenExpiration(minutes = 10): number {
   return Date.now() + 60000 * minutes;
 }
 
@@ -25,7 +25,7 @@ export function hashPassword(password: FormDataEntryValue | null): string {
 
 export async function verifyAuth(
   authInput: string,
-  isActive: boolean = false
+  isActive = false
 ): Promise<boolean> {
   const validAuth = await database.user.findFirst({
     where: {

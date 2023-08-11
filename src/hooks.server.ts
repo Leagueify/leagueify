@@ -22,7 +22,6 @@ export const handle = (async ({ event, resolve }) => {
 
   // Handle all other requests
   const response = await resolve(event);
-  // console.log(response)
   return response;
 }) satisfies Handle;
 
@@ -116,7 +115,7 @@ async function checkInstallation(event: RequestEvent, route: string) {
 async function userAuthentication(event: RequestEvent, route: string) {
   const token = event.cookies.get("Leagueify-Token");
 
-  if (token && await auth.verifyAuth(token, true)) {
+  if (token && (await auth.verifyAuth(token, true))) {
     const user = await database.user.findFirst({
       where: {
         token: token,

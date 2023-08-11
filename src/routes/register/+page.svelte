@@ -10,11 +10,9 @@
   // Variables
   export let data: PageData;
   let onComplete: any;
-
-  console.log($page);
 </script>
 
-<Form action="?/register">
+<Form action="/account?/register">
   <Stepper
     slot="formContent"
     buttonCompleteLabel="Submit"
