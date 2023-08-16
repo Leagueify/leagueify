@@ -2,12 +2,13 @@
   // 3rd Party Imports
   import { Step } from "@skeletonlabs/skeleton";
   // Type Imports
-  import type { PageData } from "./types";
+  // import type { PageData } from "./$types";
   // Leagueify Imports
   import EmailPassword from "$lib/components/forms/emailPassword.svelte";
   import { formStore } from "$lib/stores";
   // Variables
-  export const data: PageData = {};
+  // Commented out until we render data errors
+  // export const data: PageData = {};
 </script>
 
 <Step>

@@ -33,12 +33,10 @@
           >We will now guide you through the process of installing Leagueify.</span>
       </Step>
       <LeagueDetails {data} />
-      <DivisionDetails
-        {data}
-        bind:onComplete />
-      <SportDetails {data} />
-      <EmailConfig {data} />
-      <AccountDetails {data} />
+      <DivisionDetails bind:onComplete />
+      <SportDetails />
+      <EmailConfig />
+      <AccountDetails />
     </Stepper>
   </Form>
 {:else}
