@@ -15,6 +15,7 @@ model Division {
   name      String  @db.VarChar(24)
   minAge    Int
   maxAge    Int
+  isCustom  Boolean @default(false)
   rosters   Roster[]
   players   Player[]
 }
