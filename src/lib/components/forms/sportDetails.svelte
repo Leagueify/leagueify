@@ -12,12 +12,14 @@
 </script>
 
 <Step>
-  <span slot="header">Player Positions</span>
+  <span slot="header">League Positions</span>
   <span
-    >Please enter available player positions for {$formStore.leagueName}.</span>
+    >This is where you add positions for players within the {$formStore.leagueName}.
+    Players will have the ability to select a desired position during the
+    registration process.</span>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label">
-    <span>Player Positions</span>
+    <strong>Player Positions</strong>
     <InputChip
       name="leaguePositions"
       placeholder="Player Positions"

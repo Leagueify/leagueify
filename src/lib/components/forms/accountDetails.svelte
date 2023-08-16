@@ -13,9 +13,11 @@
 
 <Step>
   <span slot="header">Account Details</span>
-  <span>Please enter your account details below.</span>
+  <span
+    >Upon email verification the account created during the registration process
+    becomes the initial Master Admin for the {$formStore.leagueName}.</span>
   <label class="label">
-    <span>Your Name</span>
+    <strong>Your Name</strong>
     <input
       type="text"
       class="input variant-form-material"
@@ -25,7 +27,7 @@
       bind:value={$formStore.userName} />
   </label>
   <label class="label">
-    <span>Date of Birth</span>
+    <strong>Date of Birth</strong>
     <input
       type="date"
       class="input variant-form-material"
@@ -36,7 +38,7 @@
   </label>
   <EmailPassword />
   <label class="label">
-    <span>Phone Number</span>
+    <strong>Phone Number</strong>
     <input
       type="tel"
       class="input variant-form-material"

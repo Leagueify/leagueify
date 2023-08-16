@@ -9,7 +9,7 @@
 </script>
 
 <label class="label">
-  <span>Email Address</span>
+  <strong>Email Address</strong>
   <input
     type="email"
     class="input variant-form-material"
@@ -19,7 +19,7 @@
     bind:value={$formStore.userEmail} />
 </label>
 <label class="label">
-  <span>Password</span>
+  <strong>Password</strong>
   <input
     type="password"
     class="input variant-form-material"

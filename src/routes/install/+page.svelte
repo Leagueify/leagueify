@@ -21,24 +21,33 @@
 </svelte:head>
 
 {#if !$page.data.installedState}
-  <Form action="?/install">
-    <Stepper
-      slot="formContent"
-      buttonCompleteLabel="Submit"
-      buttonCompleteType="submit"
-      on:complete|once={onComplete}>
-      <Step>
-        <span slot="header">Welcome to Leagueify!</span>
-        <span
-          >We will now guide you through the process of installing Leagueify.</span>
-      </Step>
-      <LeagueDetails {data} />
-      <DivisionDetails bind:onComplete />
-      <SportDetails />
-      <EmailConfig />
-      <AccountDetails />
-    </Stepper>
-  </Form>
+  <div class="card p-4 !bg-transparent">
+    <Form action="?/install">
+      <Stepper
+        slot="formContent"
+        buttonCompleteLabel="Submit"
+        buttonCompleteType="submit"
+        on:complete|once={onComplete}>
+        <Step>
+          <span slot="header">Welcome to Leagueify</span>
+          <span
+            >We will now guide you through the quick and easy installation
+            process for Leagueify.</span>
+        </Step>
+        <LeagueDetails {data} />
+        <DivisionDetails bind:onComplete />
+        <SportDetails />
+        <EmailConfig />
+        <AccountDetails />
+      </Stepper>
+    </Form>
+  </div>
 {:else}
   <span>Please verify your account.</span>
 {/if}
+
+<style>
+  .card {
+    max-width: 400px !important;
+  }
+</style>

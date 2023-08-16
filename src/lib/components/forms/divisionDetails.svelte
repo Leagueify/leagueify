@@ -1,6 +1,11 @@
 <script lang="ts">
   // 3rd Party Imports
-  import { Step, Table, tableMapperValues } from "@skeletonlabs/skeleton";
+  import {
+    SlideToggle,
+    Step,
+    Table,
+    tableMapperValues,
+  } from "@skeletonlabs/skeleton";
   // Type Imports
   // import type { PageData } from "./$types";
   // Leagueify Imports
@@ -22,7 +27,11 @@
 <Step>
   <span slot="header">League Divisions</span>
   <span
-    >This is where you will create divisions for {$formStore.leagueName}.</span>
+    >This is where you will create divisions for the {$formStore.leagueName}.
+    Players can be assigned to divisions by age group, or by the league
+    administrators manually.</span>
+
+  <h5>How will players be assigned to the divisions?</h5>
   <span class="divisionAssignment"
     >Age Group<SlideToggle
       name="division"
@@ -30,7 +39,7 @@
       background="bg-surface-900 dark:bg-surface-300"
       bind:checked={$formStore.isCustom} />Manually</span>
   <label class="label">
-    <span>Division Details</span>
+    <strong>Division Details</strong>
     <div
       class="input-group input-group-divider variant-form-material {$formStore.isCustom
         ? 'grid-cols-[auto_auto]'
