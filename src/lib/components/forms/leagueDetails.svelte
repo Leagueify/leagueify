@@ -11,9 +11,11 @@
 
 <Step>
   <span slot="header">League Details</span>
-  <span>This is where you will create your league.</span>
+  <span
+    >This is where you will create your league. Enter the name of your league,
+    along with selecting the league sport from the dropdown.</span>
   <label class="label">
-    <span>League Name</span>
+    <strong>League Name</strong>
     <input
       type="text"
       class="input variant-form-material"
@@ -24,7 +26,7 @@
       bind:value={$formStore.leagueName} />
   </label>
   <label class="label">
-    <span>League Sport</span>
+    <strong>League Sport</strong>
     <select
       class="select variant-form-material"
       name="leagueSport"

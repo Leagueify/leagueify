@@ -1,16 +1,17 @@
 <script lang="ts">
   // Type Imports
-  import type { PageData } from "./types";
+  // import type { PageData } from "./$types";
   // Leagueify Imports
   import Form from "$lib/components/forms.svelte";
   import EmailPassword from "$lib/components/forms/emailPassword.svelte";
   // Variables
-  export let data: PageData;
+  // Commented out until we render data errors
+  // export const data: PageData = {};
 </script>
 
 <Form action="/account?/login">
   <svelte:fragment slot="formContent">
-    <EmailPassword {data} />
+    <EmailPassword />
     <button
       class="btn variant-filled-primary"
       type="submit">Submit</button>

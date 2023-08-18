@@ -8,6 +8,7 @@ CREATE TABLE "Division" (
     "name" VARCHAR(24) NOT NULL,
     "minAge" INTEGER NOT NULL,
     "maxAge" INTEGER NOT NULL,
+    "isCustom" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Division_pkey" PRIMARY KEY ("id")
 );

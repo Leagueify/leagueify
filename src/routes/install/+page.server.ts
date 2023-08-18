@@ -36,14 +36,8 @@ export const actions: Actions = {
     const installUser = await account.create(data, UserRoles.MASTER_ADMIN);
     const installEmailConfig = await email.createConfig(data);
     const installLeague = await league.create(data, installEmailConfig.id);
-    const installPositions = await league.createPositions(
-      data,
-      installLeague.id
-    );
-    const installDivisions = await league.createDivisions(
-      data,
-      installLeague.id
-    );
+    await league.createPositions(data, installLeague.id);
+    await league.createDivisions(data, installLeague.id);
 
     // Set Cookie to installed and set expiration to 1 day from now
     cookies.set("Leagueify-Installed", "installed", {
