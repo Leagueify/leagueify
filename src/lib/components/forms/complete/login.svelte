@@ -1,4 +1,6 @@
 <script lang="ts">
+  // 3rd Party Imports
+  import { modalStore } from "@skeletonlabs/skeleton";
   // Type Imports
   // import type { PageData } from "./$types";
   // Leagueify Imports
@@ -14,6 +16,9 @@
     <EmailPassword />
     <button
       class="btn variant-filled-primary"
-      type="submit">Submit</button>
+      type="submit"
+      on:click={() => {
+        modalStore.close()
+      }}>Submit</button>
   </svelte:fragment>
 </Form>
