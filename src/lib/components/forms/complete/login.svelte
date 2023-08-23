@@ -9,11 +9,14 @@
   // export const data: PageData = {};
 </script>
 
-<Form action="/account?/login">
-  <svelte:fragment slot="formContent">
-    <EmailPassword />
-    <button
-      class="btn variant-filled-primary"
-      type="submit">Submit</button>
-  </svelte:fragment>
-</Form>
+<div class="card p-4">
+  <Form action="/account?/login">
+    <svelte:fragment slot="formContent">
+      <EmailPassword />
+      <br />
+      <button
+        class="btn variant-filled-primary"
+        type="submit">Submit</button>
+    </svelte:fragment>
+  </Form>
+</div>
