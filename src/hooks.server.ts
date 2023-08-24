@@ -1,14 +1,35 @@
 // 3rd Party Imports
+import * as Sentry from "@sentry/sveltekit";
 import { redirect } from "@sveltejs/kit";
+import { sequence } from "@sveltejs/kit/hooks";
 // Type Imports
 import type { Handle } from "@sveltejs/kit";
 // Leagueify Imports
 import * as account from "$lib/server/account";
 import * as auth from "$lib/utils/auth";
 import * as league from "$lib/server/league";
+import { PUBLIC_SENTRY, PUBLIC_SENTRY_DSN } from "$env/static/public";
+
+const sentryEnabled = PUBLIC_SENTRY === "true";
+
+// Initialize Sentry
+Sentry.init({
+  dsn: PUBLIC_SENTRY_DSN,
+  tracesSampleRate: 1,
+  environment: import.meta.env.PROD ? "production" : "development",
+  enabled: sentryEnabled,
+});
 
 // Handle Requests
-export const handle = (async ({ event, resolve }) => {
+export const handle = sequence(Sentry.sentryHandle(), (async ({
+  event,
+  resolve,
+}) => {
+  // Set Sentry Tags
+  Sentry.configureScope(function (scope) {
+    scope.setTag("leagueify.url", event.url.hostname);
+  });
+
   const route = event.url.pathname;
 
   // Handle Activation Routes
@@ -36,4 +57,6 @@ export const handle = (async ({ event, resolve }) => {
   // Handle all other requests
   const response = await resolve(event);
   return response;
-}) satisfies Handle;
+}) satisfies Handle);
+
+export const handleError = Sentry.handleErrorWithSentry();
