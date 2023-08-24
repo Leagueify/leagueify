@@ -33,16 +33,9 @@ nvm use
 
 # Install Leagueify Dependencies
 npm install
-```
 
-To run the application in development mode, run:
-
-```bash
 # Bring up the Leagueify Stack
 docker compose up -d
-
-# Seed the Local Database
-npx prisma db seed
 ```
 
 **WARNING:** Do not use production database credentials within the `.env` file. The `.env` file created in the previous step is used for local development only. The `.env` file should not be committed to the repository.

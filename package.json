@@ -7,8 +7,8 @@
     "npm": "8.19.2"
   },
   "scripts": {
-    "start": "npx prisma migrate deploy && node index.js",
-    "dev": "npx prisma migrate deploy && vite dev",
+    "start": "npx prisma migrate deploy && npx prisma db seed && node index.js",
+    "dev": "npx prisma migrate deploy && npx prisma db seed && vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
