@@ -7,8 +7,8 @@
     "npm": "8.19.2"
   },
   "scripts": {
-    "start": "npx prisma migrate deploy && node index.js",
-    "dev": "npx prisma migrate deploy && vite dev",
+    "start": "npx prisma migrate deploy && npx prisma db seed && node index.js",
+    "dev": "npx prisma migrate deploy && npx prisma db seed && vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.1.1",
+    "@sentry/sveltekit": "^7.64.0",
     "@types/bcrypt": "^5.0.0",
     "@types/nodemailer": "^6.4.8",
     "bcrypt": "^5.1.0",

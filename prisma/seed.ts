@@ -5,7 +5,37 @@ async function main() {
   const sports = await prisma.sport.createMany({
     data: [
       {
+        name: "Baseball",
+      },
+      {
+        name: "Basketball",
+      },
+      {
+        name: "Field Hockey",
+      },
+      {
+        name: "Football",
+      },
+      {
         name: "Hockey",
+      },
+      {
+        name: "Lacrosse",
+      },
+      {
+        name: "Quidditch",
+      },
+      {
+        name: "Rugby",
+      },
+      {
+        name: "Soccer",
+      },
+      {
+        name: "Softball",
+      },
+      {
+        name: "Volleyball",
       },
     ],
     skipDuplicates: true,

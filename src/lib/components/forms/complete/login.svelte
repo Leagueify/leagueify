@@ -17,11 +17,11 @@
       <EmailPassword />
       <br />
       <button
-      class="btn variant-filled-primary"
-      type="submit"
-      on:click={() => {
-        modalStore.close()
-      }}>Submit</button>
+        class="btn variant-filled-primary"
+        type="submit"
+        on:click={() => {
+          modalStore.close();
+        }}>Submit</button>
     </svelte:fragment>
   </Form>
 </div>

@@ -5,6 +5,11 @@ RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY --chown=node:node package.json package-lock.json ./
 
+ARG PUBLIC_SENTRY=true
+ARG PUBLIC_SENTRY_DSN
+ENV PUBLIC_SENTRY=$PUBLIC_SENTRY
+ENV PUBLIC_SENTRY_DSN=$PUBLIC_SENTRY_DSN
+
 RUN npm install
 
 COPY --chown=node:node . .

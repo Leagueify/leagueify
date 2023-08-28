@@ -10,7 +10,6 @@ services:
       target: development
     environment:
       DATABASE_URI: postgresql://leagueify:password@leagueify-database-dev:5432/leagueify?schema=public
-      PUBLIC_SENTRY: false
     command: npm run dev -- --host --port=3000
     volumes:
       - ./prisma/:/home/node/app/prisma/
