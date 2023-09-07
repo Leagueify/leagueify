@@ -22,10 +22,8 @@ const config = {
     require("@tailwindcss/line-clamp"),
     skeleton({
       themes: {
-        preset: [
-          { name: "skeleton", enhancements: true },
-        ]
-      }
+        preset: [{ name: "skeleton", enhancements: true }],
+      },
     }),
   ],
 } satisfies Config;

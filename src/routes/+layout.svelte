@@ -2,7 +2,13 @@
   // 3rd Party Imports
   import "../app.postcss";
   import { page } from "$app/stores";
-  import { AppBar, AppShell, Modal, getModalStore, initializeStores } from "@skeletonlabs/skeleton";
+  import {
+    AppBar,
+    AppShell,
+    Modal,
+    getModalStore,
+    initializeStores,
+  } from "@skeletonlabs/skeleton";
   // Type Imports
   import type { ModalComponent, ModalSettings } from "@skeletonlabs/skeleton";
   // Leagueify Imports
