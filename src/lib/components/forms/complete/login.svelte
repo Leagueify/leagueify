@@ -1,6 +1,6 @@
 <script lang="ts">
   // 3rd Party Imports
-  import { modalStore } from "@skeletonlabs/skeleton";
+  import { getModalStore } from "@skeletonlabs/skeleton";
   // Type Imports
   // import type { PageData } from "./$types";
   // Leagueify Imports
@@ -9,6 +9,9 @@
   // Variables
   // Commented out until we render data errors
   // export const data: PageData = {};
+
+  // Initialize Skeleton Stores
+  const modalStore = getModalStore();
 </script>
 
 <div class="card p-4">

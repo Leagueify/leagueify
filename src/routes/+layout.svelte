@@ -1,14 +1,22 @@
 <script lang="ts">
   // 3rd Party Imports
-  import "@skeletonlabs/skeleton/themes/theme-skeleton.css";
-  import "@skeletonlabs/skeleton/styles/all.css";
   import "../app.postcss";
   import { page } from "$app/stores";
-  import { AppBar, AppShell, Modal, modalStore } from "@skeletonlabs/skeleton";
+  import {
+    AppBar,
+    AppShell,
+    Modal,
+    getModalStore,
+    initializeStores,
+  } from "@skeletonlabs/skeleton";
   // Type Imports
   import type { ModalComponent, ModalSettings } from "@skeletonlabs/skeleton";
   // Leagueify Imports
   import LoginForm from "$lib/components/forms/complete/login.svelte";
+
+  // Initialize Skeleton Stores
+  initializeStores();
+  const modalStore = getModalStore();
 
   // Modals
   const modalComponentRegistry: Record<string, ModalComponent> = {
