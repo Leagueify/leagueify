@@ -44,7 +44,7 @@
     <select
       class="select variant-form-material"
       name="leagueSport"
-      on:focus={onLeagueSelect}
+      on:input={onLeagueSelect}
       bind:value={$formStore.leagueSport}>
       <option
         value="none"

@@ -22,9 +22,13 @@
     delete $formStore.divisionMinAge;
     delete $formStore.divisionMaxAge;
   }
+
+  let divisionCounter = 0;
+
+
 </script>
 
-<Step>
+<Step locked={divisionCounter === 0}>
   <span slot="header">League Divisions</span>
   <span
     >This is where you will create divisions for the {$formStore.leagueName}.
@@ -59,7 +63,9 @@
           name="divisionMinAge"
           id="divisionMinAge"
           placeholder="Min"
-          maxlength="2"
+          min={0}
+          max={130}
+          maxlength="3"
           bind:value={$formStore.divisionMinAge} />
         <input
           type="number"
@@ -67,7 +73,9 @@
           name="divisionMaxAge"
           id="divisionMaxAge"
           placeholder="Max"
-          maxlength="2"
+          min={0}
+          max={130}
+          maxlength="3"
           bind:value={$formStore.divisionMaxAge} />
       {/if}
       <button
@@ -78,6 +86,8 @@
             $formStore.divisionMinAge = 0;
             $formStore.divisionMaxAge = 0;
           }
+        if ($formStore.divisionMaxAge > $formStore.divisionMinAge || $formStore.isCustom) {
+          divisionCounter ++
           $formStore.leagueDivisions.push({
             name: $formStore.divisionName,
             minAge: $formStore.divisionMinAge,
@@ -87,6 +97,7 @@
           $formStore.divisionName = "";
           $formStore.divisionMinAge = "";
           $formStore.divisionMaxAge = "";
+        }
         }}>Add Division</button>
     </div>
   </label>
