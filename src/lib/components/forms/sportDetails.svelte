@@ -9,9 +9,14 @@
   $formStore.leaguePositions = [];
   // Commented out until we render data errors
   // export const data: PageData = {};
+
+  let locked = true;
+  const onChange = () => locked = $formStore.leaguePositions.length === 0
+
+
 </script>
 
-<Step>
+<Step locked={locked}>
   <span slot="header">League Positions</span>
   <span
     >This is where you add positions for players within the {$formStore.leagueName}.
@@ -23,6 +28,8 @@
     <InputChip
       name="leaguePositions"
       placeholder="Player Positions"
+      on:add={onChange}
+      on:remove={onChange}
       bind:value={$formStore.leaguePositions} />
   </label>
 </Step>
