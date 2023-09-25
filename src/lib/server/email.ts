@@ -31,6 +31,20 @@ async function createTransport(emailConfig: EmailConfigData) {
   });
 }
 
+export async function testConnection(emailConfig: EmailConfigData) {
+  const transporter = await createTransport(emailConfig)
+
+  transporter.verify((error) => {
+    if (error) {
+      return error
+    } else {
+      return {code: 200, message: "config is correct"}
+    }
+
+  })
+
+} 
+
 export async function leagueCreation(user: UserData, league: LeagueData) {
   const emailConfig = await _get_emailConfig(league.emailConfig);
 

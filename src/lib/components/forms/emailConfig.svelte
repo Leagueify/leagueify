@@ -8,9 +8,23 @@
   // Variables
   // Commented out until we render data errors
   // export const data: PageData = {};
-</script>
 
-<Step>
+  let validEmail = false;
+  let validSmtpHost = false; 
+  let validPort = false;
+  let validUsername = false;
+  let validPassword = false;
+
+  
+  const emailValidation = (e: any) => { validEmail = e.target.value.toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)}
+  const smtpHostValidation = (e:any) => { validSmtpHost = e.target.value.toLowerCase().match(/^\w+\.\w+\.[a-zA-z]{1,3}$/)}
+  const portValidation = (e: any) => { validPort = e.target.value.toLowerCase().match(/^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/)}
+  const usernameValidation = (e: any) => { validUsername = e.target.value.length}
+  const passwordValidation = (e: any) => { validPassword = e.target.value.length}
+
+  </script>
+
+<Step locked={!validEmail || !validSmtpHost || !validPort || !validUsername || !validPassword}>
   <span slot="header">League Email Configuration</span>
   <span
     >Leagueify requires an SMTP connection to send email notifications. Please
@@ -24,6 +38,7 @@
       name="leagueOutboundEmail"
       placeholder="noreply@leagueify.org"
       maxlength="64"
+      on:input={emailValidation}
       bind:value={$formStore.leagueOutboundEmail} />
   </label>
   <label class="label">
@@ -34,6 +49,7 @@
       name="leagueSMTPHost"
       placeholder="smtp.gmail.com"
       maxlength="255"
+      on:input={smtpHostValidation}
       bind:value={$formStore.leagueSMTPHost} />
   </label>
   <label class="label">
@@ -44,6 +60,7 @@
       name="leagueSMTPPort"
       placeholder="465"
       maxlength="5"
+      on:input={portValidation}
       bind:value={$formStore.leagueSMTPPort} />
   </label>
   <label class="label">
@@ -54,6 +71,7 @@
       name="leagueSMTPUser"
       placeholder="SMTPUser"
       maxlength="64"
+      on:input={usernameValidation}
       bind:value={$formStore.leagueSMTPUser} />
   </label>
   <label class="label">
@@ -64,6 +82,7 @@
       name="leagueSMTPPass"
       placeholder="********"
       maxlength="255"
+      on:input={passwordValidation}
       bind:value={$formStore.leagueSMTPPass} />
   </label>
 </Step>
