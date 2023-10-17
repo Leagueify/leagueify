@@ -4,21 +4,6 @@ import nodemailer from "nodemailer";
 import database from "$lib/server/database";
 import type { EmailConfigData, LeagueData, UserData } from "$lib/interfaces";
 
-export async function createConfig(data: FormData) {
-  // Parse Form Data
-  const submittedEmailData: EmailConfigData = {
-    outboundEmail: data.get("leagueOutboundEmail") as string,
-    smtpHost: data.get("leagueSMTPHost") as string,
-    smtpPort: Number.parseInt(data.get("leagueSMTPPort") as string),
-    smtpUser: data.get("leagueSMTPUser") as string,
-    smtpPass: data.get("leagueSMTPPass") as string,
-  };
-
-  return database.emailConfig.create({
-    data: submittedEmailData,
-  });
-}
-
 async function createTransport(emailConfig: EmailConfigData) {
   return nodemailer.createTransport({
     host: emailConfig.smtpHost,
@@ -31,32 +16,59 @@ async function createTransport(emailConfig: EmailConfigData) {
   });
 }
 
-export async function testConnection(emailConfig: EmailConfigData) {
-  const transporter = await createTransport(emailConfig)
+async function saveEmailToDB(emailConfig: EmailConfigData) {
+  return database.emailConfig.create({
+    data: emailConfig
+  })
+};
 
-  transporter.verify((error) => {
+
+// async function saveEmailToDB(emailData: EmailConfigData) => {
+//   return 
+// }
+
+
+export async function createConfig(data: FormData) {
+  // Parse Form Data
+  const submittedEmailData: EmailConfigData = {
+    outboundEmail: data.get("leagueOutboundEmail") as string,
+    smtpHost: data.get("leagueSMTPHost") as string,
+    smtpPort: Number.parseInt(data.get("leagueSMTPPort") as string),
+    smtpUser: data.get("leagueSMTPUser") as string,
+    smtpPass: data.get("leagueSMTPPass") as string,
+  };
+
+  const transporter = await createTransport(submittedEmailData)
+
+  transporter.verify((error: any) => {
     if (error) {
       return error
     } else {
-      return {code: 200, message: "config is correct"}
+      
+      return saveEmailToDB(submittedEmailData);
     }
-
   })
 
-} 
+}
+
+
+
+
+
 
 export async function leagueCreation(user: UserData, league: LeagueData) {
   const emailConfig = await _get_emailConfig(league.emailConfig);
 
   const transporter = await createTransport(emailConfig);
 
-  transporter.sendMail({
-    from: `${league.name} <${emailConfig.outboundEmail}>`,
-    to: user.email,
-    subject: "Welcome to Leagueify!",
-    text: `Thank you for using Leagueify! A league for ${league.name} has been created. Please verify your email address: http://${league.domain}/activate/league?token=${user.token}`,
-    html: `<p>Thank you for using Leagueify! A league for <strong>${league.name}</strong> has been created.</p><p>Please verify your email address <a href="http://${league.domain}/activate/league?token=${user.token}" target="_blank">here</a>.</p>`,
-  });
+    transporter.sendMail({
+      from: `${league.name} <${emailConfig.outboundEmail}>`,
+      to: user.email,
+      subject: "Welcome to Leagueify!",
+      text: `Thank you for using Leagueify! A league for ${league.name} has been created. Please verify your email address: http://${league.domain}/activate/league?token=${user.token}`,
+      html: `<p>Thank you for using Leagueify! A league for <strong>${league.name}</strong> has been created.</p><p>Please verify your email address <a href="http://${league.domain}/activate/league?token=${user.token}" target="_blank">here</a>.</p>`,
+    });
+
 }
 
 export async function userCreation(user: UserData, domain: string) {

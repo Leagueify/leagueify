@@ -34,8 +34,11 @@ export const actions: Actions = {
 
     // TODO: Move to Transaction
     const installUser = await account.create(data, UserRoles.MASTER_ADMIN);
+    console.log(installUser)
     const installEmailConfig = await email.createConfig(data);
+    console.log(installEmailConfig)
     const installLeague = await league.create(data, installEmailConfig.id);
+    console.log(installLeague)
     await league.createPositions(data, installLeague.id);
     await league.createDivisions(data, installLeague.id);
 
@@ -48,5 +51,8 @@ export const actions: Actions = {
     email.leagueCreation(installUser, installLeague);
 
     throw redirect(303, "/");
+  },
+  testEmail: async ({cookies, locals, request}) => {
+    const data: FormData = await request.formData();
   },
 };

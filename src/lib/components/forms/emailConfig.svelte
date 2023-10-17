@@ -8,7 +8,6 @@
   // Variables
   // Commented out until we render data errors
   // export const data: PageData = {};
-
   let validEmail = false;
   let validSmtpHost = false; 
   let validPort = false;
