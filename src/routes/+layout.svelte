@@ -62,11 +62,12 @@
                 data-sveltekit-preload-data="hover">
                 <span class="material-icons-sharp">person_add_alt</span>
               </a>
-              <button
-                type="button"
-                class="btn-icon !bg-transparent">
+              <a
+                href="/settings"
+                class="btn-icon !bg-transparent"
+                data-sveltekit-preload-data="hover">
                 <span class="material-icons-sharp">settings</span>
-              </button>
+              </a>
               <!-- User Logout Button -->
               <form
                 action="/account?/logout"
