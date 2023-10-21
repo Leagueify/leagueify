@@ -93,9 +93,8 @@
         </svelte:fragment>
       </AppBar>
     </svelte:fragment>
-    <div class="container h-full mx-auto flex justify-center items-center">
-      <slot />
-    </div>
+    <!-- Installed Content Slot -->
+    <slot />
     <svelte:fragment slot="footer">Footer</svelte:fragment>
   </AppShell>
 {/if}
