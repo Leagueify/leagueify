@@ -95,6 +95,14 @@
     </svelte:fragment>
     <!-- Installed Content Slot -->
     <slot />
-    <svelte:fragment slot="footer">Footer</svelte:fragment>
+    <svelte:fragment slot="footer">
+      <div class="container h-full mx-auto flex justify-center items-center">
+        <a
+          href="https://github.com/Leagueify/leagueify"
+          target="_blank noreferrer nofollow"
+          >Leagueify is an open source project hosted on GitHub</a
+        >.
+      </div>
+    </svelte:fragment>
   </AppShell>
 {/if}
