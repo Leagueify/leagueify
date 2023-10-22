@@ -5,6 +5,7 @@ import type { UserData, UserRoles } from "$lib/interfaces";
 import type { RequestEvent } from "@sveltejs/kit";
 // Leagueify Imports
 import * as auth from "$lib/utils/auth";
+import { protectedRoute } from "$lib/utils/routes";
 import database from "$lib/server/database";
 
 export async function activate(event: RequestEvent) {
@@ -57,8 +58,9 @@ export async function create(data: FormData, role: UserRoles) {
 
 export async function isAuthenticated(event: RequestEvent) {
   const token = event.cookies.get("Leagueify-Token");
+  const authenticated = token && (await auth.verifyAuth(token, true));
 
-  if (token && (await auth.verifyAuth(token, true))) {
+  if (authenticated) {
     const user = await database.user.findFirst({
       where: {
         token: token,
@@ -69,5 +71,13 @@ export async function isAuthenticated(event: RequestEvent) {
       user: user,
       ...event.locals,
     };
+  } else {
+    event.locals = {
+      user: null,
+      ...event.locals,
+    };
   }
+
+  if (!authenticated && (await protectedRoute(event.url.pathname)))
+    throw redirect(303, "/");
 }
