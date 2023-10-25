@@ -12,16 +12,18 @@
   let onComplete: any;
 </script>
 
-<Form action="/account?/register">
-  <Stepper
-    slot="formContent"
-    buttonCompleteLabel="Submit"
-    buttonCompleteType="submit"
-    on:complete|once={onComplete}>
-    <Step>
-      <span slot="header">Welcome to {$page.data.league.name}!</span>
-      <span>Please create an account before registering players.</span>
-    </Step>
-    <AccountDetails {data} />
-  </Stepper>
-</Form>
+<div class="h-full mx-auto flex justify-center items-center">
+  <Form action="/account?/register">
+    <Stepper
+      slot="formContent"
+      buttonCompleteLabel="Submit"
+      buttonCompleteType="submit"
+      on:complete|once={onComplete}>
+      <Step>
+        <span slot="header">Welcome to {$page.data.league.name}!</span>
+        <span>Please create an account before registering players.</span>
+      </Step>
+      <AccountDetails {data} />
+    </Stepper>
+  </Form>
+</div>

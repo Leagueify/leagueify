@@ -62,11 +62,12 @@
                 data-sveltekit-preload-data="hover">
                 <span class="material-icons-sharp">person_add_alt</span>
               </a>
-              <button
-                type="button"
-                class="btn-icon !bg-transparent">
+              <a
+                href="/settings"
+                class="btn-icon !bg-transparent"
+                data-sveltekit-preload-data="hover">
                 <span class="material-icons-sharp">settings</span>
-              </button>
+              </a>
               <!-- User Logout Button -->
               <form
                 action="/account?/logout"
@@ -93,9 +94,16 @@
         </svelte:fragment>
       </AppBar>
     </svelte:fragment>
-    <div class="container h-full mx-auto flex justify-center items-center">
-      <slot />
-    </div>
-    <svelte:fragment slot="footer">Footer</svelte:fragment>
+    <!-- Installed Content Slot -->
+    <slot />
+    <svelte:fragment slot="footer">
+      <div class="container h-full mx-auto flex justify-center items-center">
+        <a
+          href="https://github.com/Leagueify/leagueify"
+          target="_blank noreferrer nofollow"
+          >Leagueify is an open source project hosted on GitHub</a
+        >.
+      </div>
+    </svelte:fragment>
   </AppShell>
 {/if}
