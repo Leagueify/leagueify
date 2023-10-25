@@ -43,7 +43,7 @@
             <ListBoxItem
               bind:group={activeSettingsPage}
               name="settingsPage"
-              value="Security">Security</ListBoxItem>
+              value="Players">Players</ListBoxItem>
             <ListBoxItem
               bind:group={activeSettingsPage}
               name="settingsPage"
