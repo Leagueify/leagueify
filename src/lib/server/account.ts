@@ -56,6 +56,10 @@ export async function create(data: FormData, role: UserRoles) {
   });
 }
 
+export async function isAdmin(user: UserData) {
+  return user.role !== "USER";
+}
+
 export async function isAuthenticated(event: RequestEvent) {
   const token = event.cookies.get("Leagueify-Token");
   const authenticated = token && (await auth.verifyAuth(token, true));
