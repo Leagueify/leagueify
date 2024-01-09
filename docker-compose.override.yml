@@ -1,25 +1,9 @@
 version: "3.9"
 
 services:
-  leagueify-webapp:
-    user: 1000:1000
-    container_name: leagueify-webapp-dev
+  leagueify:
+    container_name: leagueify-dev
     image: leagueify
     build:
       context: .
-      target: development
-    environment:
-      DATABASE_URI: postgresql://leagueify:password@leagueify-database-dev:5432/leagueify?schema=public
-      PUBLIC_SENTRY: false
-    command: npm run dev -- --host --port=3000
-    volumes:
-      - ./prisma/:/home/node/app/prisma/
-      - ./scripts/:/home/node/app/scripts/
-      - ./src/:/home/node/app/src/
-      - ./static/:/home/node/app/static/
-      - ./tests/:/home/node/app/tests/
 
-  leagueify-database:
-    container_name: leagueify-database-dev
-    ports:
-      - 5432:5432
