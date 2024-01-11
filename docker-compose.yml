@@ -1,50 +1,28 @@
-# This is the main docker-compose file for the Leagueify project.
 version: "3.9"
 
 services:
   traefik:
     container_name: leagueify-traefik
-    image: traefik:v2.9.6
+    image: traefik:v2.10.7
     command:
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:3000
+      - --entrypoints.api.address=:8000
     ports:
-      - 80:3000
-      - 8080:8080
+      - 80:8000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  leagueify-webapp:
-    container_name: leagueify-webapp
-    image: ghcr.io/leagueify/leagueify:latest
-    environment:
-      DATABASE_URI: postgresql://leagueify:password@leagueify-database:5432/leagueify?schema=public
-      DATABASE_USER: leagueify
-      DATABASE_PASS: password
-      PASSWORD_PEPPER: NeverGonnaGiveYouUp
+  leagueify:
+    container_name: leagueify
+    image: ghcr.io/leagueify/server:latest
     labels:
       - traefik.enable=true
-      - traefik.http.routers.leagueify-webapp.entrypoints=web
-      - traefik.http.routers.leagueify-webapp.rule=PathPrefix(`/`)
-      - traefik.http.middlewares.leagueify-webapp.ratelimit.average=100
+      - traefik.http.routers.leagueify.entrypoints=api
+      - traefik.http.routers.leagueify.rule=PathPrefix(`/`)
+      - traefik.http.middlewares.leagueify.ratelimit.average=100
     expose:
-      - 3000
+      - 8000
     restart: always
 
-  leagueify-database:
-    container_name: leagueify-database
-    image: postgres:15.2-alpine3.17
-    environment:
-      POSTGRES_USER: leagueify
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: leagueify
-    expose:
-      - 5432
-    volumes:
-      - database:/data/db
-    restart: always
-
-volumes:
-  database:

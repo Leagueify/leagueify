@@ -1,31 +1,21 @@
-FROM node:18.12.1-alpine3.17 as development
-USER node
+# syntax=docker/dockerfile:1
 
-RUN mkdir -p /home/node/app
-WORKDIR /home/node/app
-COPY --chown=node:node package.json package-lock.json ./
+# build client
+from node:18.12.1-alpine3.17 as client-builder
+add https://github.com/leagueify/client.git /client
+workdir /client
+run npm install && npm run build
 
-RUN npm install
-
-COPY --chown=node:node . .
-
-# Generate Licenses
-# RUN node scripts/getLicenses.mjs
-
-# Generate Prisma Client
-RUN npx prisma generate
-
-FROM development as builder
-
-RUN npm run build
-RUN npm ci
-
-FROM builder as production
-
-WORKDIR /app
-COPY --chown=node:node --from=builder /home/node/app/build .
-COPY --chown=node:node --from=builder /home/node/app/package.json .
-COPY --chown=node:node --from=builder /home/node/app/node_modules ./node_modules
-COPY --chown=node:node --from=builder /home/node/app/prisma ./prisma
-
-CMD [ "npm", "start" ]
+# build leagueify api server
+from golang:1.21.5-alpine3.19 as server-builder
+add https://github.com/leagueify/server.git /server
+workdir /server
+copy --from=client-builder /client/dist ./client
+run go install github.com/swaggo/swag/cmd/swag@latest
+run swag init -g server.go --outputTypes json
+run cgo_enabled=0 goos=linux go build -o /leagueify-api .
+# build production image
+from gcr.io/distroless/base-debian11 as release
+copy --from=server-builder /leagueify-api /leagueify-api
+expose 8000
+entrypoint ["/leagueify-api"]
